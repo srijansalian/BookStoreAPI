@@ -11,7 +11,7 @@ public interface IBookService {
 
 	
 
-	List<BookInformation> getUsers();
+	List<BookInformation> getBookInfo();
 
 }
 

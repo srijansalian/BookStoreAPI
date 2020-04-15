@@ -35,7 +35,7 @@ public class BookServiceImplementation implements IBookService {
 
 	@Transactional
 	@Override
-	public List<BookInformation> getUsers() {
+	public List<BookInformation> getBookInfo() {
 		List<BookInformation> users = repository.getUsers();
 
 		return users;

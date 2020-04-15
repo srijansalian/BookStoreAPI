@@ -33,8 +33,8 @@ public class BookStoreController {
 	}
 
 	@GetMapping("/getbooks")
-	public ResponseEntity<BookResponse> getUsers() {
-		List<BookInformation> books = bookservice.getUsers();
+	public ResponseEntity<BookResponse> getBooks() {
+		List<BookInformation> books = bookservice.getBookInfo();
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
 
