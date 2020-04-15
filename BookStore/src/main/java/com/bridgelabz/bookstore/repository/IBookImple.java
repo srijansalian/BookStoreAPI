@@ -1,4 +1,6 @@
 package com.bridgelabz.bookstore.repository;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
@@ -18,6 +20,15 @@ public class IBookImple implements IBook{
 		Session session = entityManager.unwrap(Session.class);
 		session.saveOrUpdate(bookinformation);
 		return bookinformation;
+	}
+
+
+	@Override
+	public List<BookInformation> getUsers() {
+		Session currentSession = entityManager.unwrap(Session.class);
+		List usersList = currentSession.createQuery("from BookInformation").getResultList();
+		return usersList;
+
 	}
 
 

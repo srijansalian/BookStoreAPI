@@ -57,9 +57,9 @@ public class BookResponse {
 	}
 
 
-	public BookResponse(int statusCode, String response, List<BookInformation> bookList) {
+	public BookResponse( String response, List<BookInformation> bookList) {
 		super();
-		this.statusCode = statusCode;
+		
 		this.response = response;
 		this.bookList = bookList;
 	}

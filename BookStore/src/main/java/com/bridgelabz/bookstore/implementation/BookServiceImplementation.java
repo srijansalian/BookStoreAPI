@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 
@@ -29,6 +31,14 @@ public class BookServiceImplementation implements IBookService{
 		bookinformation.setQuantity(information.getQuantity());
 		repository.save(bookinformation);
 		return true;
+	}
+
+	@Transactional
+	@Override
+	public List<BookInformation> getUsers() {
+		List<BookInformation> users = repository.getUsers();
+		// UserInformation user = users.get(0);
+		return users;
 	}
 
 	
