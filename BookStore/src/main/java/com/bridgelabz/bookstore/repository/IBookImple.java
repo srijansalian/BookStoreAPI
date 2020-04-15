@@ -26,8 +26,8 @@ public class IBookImple implements IBook{
 	@Override
 	public List<BookInformation> getUsers() {
 		Session currentSession = entityManager.unwrap(Session.class);
-		List usersList = currentSession.createQuery("from BookInformation").getResultList();
-		return usersList;
+		List BookList = currentSession.createQuery("from BookInformation").getResultList();
+		return BookList;
 
 	}
 

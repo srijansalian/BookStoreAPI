@@ -1,4 +1,5 @@
 package com.bridgelabz.bookstore.implementation;
+
 import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.repository.IBook;
@@ -11,9 +12,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-
 @Service
-public class BookServiceImplementation implements IBookService{
+public class BookServiceImplementation implements IBookService {
 	private BookInformation bookinformation = new BookInformation();
 	private ModelMapper modelMapper = new ModelMapper();
 //	@Autowired
@@ -37,11 +37,8 @@ public class BookServiceImplementation implements IBookService{
 	@Override
 	public List<BookInformation> getUsers() {
 		List<BookInformation> users = repository.getUsers();
-		// UserInformation user = users.get(0);
+
 		return users;
 	}
-
-	
-
 
 }

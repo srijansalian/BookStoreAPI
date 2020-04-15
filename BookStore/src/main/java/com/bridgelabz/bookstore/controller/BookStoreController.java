@@ -1,4 +1,5 @@
 package com.bridgelabz.bookstore.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +22,22 @@ import com.bridgelabz.bookstore.service.IBookService;
 @CrossOrigin
 @RequestMapping("/books")
 public class BookStoreController {
-	
+
 	@Autowired
 	IBookService bookservice;
-	
-	
+
 	@PostMapping("/add")
-	public ResponseEntity<BookResponse> addBook(@RequestBody BookDto information){
+	public ResponseEntity<BookResponse> addBook(@RequestBody BookDto information) {
 		bookservice.addBooks(information);
 		return null;
 	}
-	@GetMapping("/getusers")
-	public ResponseEntity<BookResponse> getUsers() {
-		List<BookInformation> users = bookservice.getUsers();
 
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Registered user are", users));
+	@GetMapping("/getbooks")
+	public ResponseEntity<BookResponse> getUsers() {
+		List<BookInformation> books = bookservice.getUsers();
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
 
 	}
-	
-	
 
 }
