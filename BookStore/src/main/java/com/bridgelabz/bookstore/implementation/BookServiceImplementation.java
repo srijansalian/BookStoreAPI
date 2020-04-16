@@ -2,6 +2,7 @@ package com.bridgelabz.bookstore.implementation;
 
 import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.repository.IBook;
 import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,13 @@ public class BookServiceImplementation implements IBookService {
 	private ModelMapper modelMapper = new ModelMapper();
 //	@Autowired
 //	private ModelMapper modelMapper;
+//	@Autowired
+//	private IBook repository;
+	
 	@Autowired
-	private IBook repository;
+	private BookImple repository;
+	
+	
 
 	@Transactional
 	@Override
@@ -38,7 +44,7 @@ public class BookServiceImplementation implements IBookService {
 	@Transactional
 	@Override
 	public List<BookInformation> getBookInfo() {
-		List<BookInformation> users = repository.getUsers();
+		List<BookInformation> users = repository.findAll();
 
 		return users;
 	}
