@@ -1,4 +1,5 @@
 package com.bridgelabz.bookstore.repository;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,12 +9,10 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import com.bridgelabz.bookstore.entity.BookInformation;
 
-
 @Repository
-public class IBookImple implements IBook{
+public class IBookImple implements IBook {
 	@PersistenceContext
 	private EntityManager entityManager;
-
 
 	@Override
 	public BookInformation save(BookInformation bookinformation) {
@@ -22,7 +21,6 @@ public class IBookImple implements IBook{
 		return bookinformation;
 	}
 
-
 	@Override
 	public List<BookInformation> getUsers() {
 		Session currentSession = entityManager.unwrap(Session.class);
@@ -30,10 +28,5 @@ public class IBookImple implements IBook{
 		return BookList;
 
 	}
-
-
-
-
-	
 
 }

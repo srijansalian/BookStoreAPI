@@ -55,8 +55,6 @@ public class BookInformation {
 		this.bookName = bookName;
 	}
 
-
-
 	public String getBookDetails() {
 		return bookDetails;
 	}

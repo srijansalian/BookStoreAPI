@@ -7,12 +7,12 @@ public class BookDto {
 	private String bookName;
 
 	private int quantity;
-	
+
 	private Double price;
 	private String authorName;
 
 	private String bookDetails;
-	
+
 	public String getBookName() {
 		return bookName;
 	}
@@ -52,7 +52,5 @@ public class BookDto {
 	public void setBookDetails(String bookDetails) {
 		this.bookDetails = bookDetails;
 	}
-
-	
 
 }
