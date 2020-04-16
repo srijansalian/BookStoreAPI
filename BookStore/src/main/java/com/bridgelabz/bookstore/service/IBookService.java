@@ -11,4 +11,6 @@ public interface IBookService {
 
 	List<BookInformation> getBookInfo();
 
+	List<BookInformation> sortGetAllBooks();
+
 }

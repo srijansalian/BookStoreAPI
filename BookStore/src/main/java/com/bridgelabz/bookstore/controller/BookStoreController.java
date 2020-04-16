@@ -40,5 +40,11 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
 
 	}
+	@GetMapping("/sort")
+	public ResponseEntity<BookResponse> sort(){
+		List<BookInformation> list=bookservice.sortGetAllBooks();
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+	}
+
 
 }
