@@ -5,9 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
-
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import com.bridgelabz.bookstore.entity.BookInformation;
+
 
 @Repository
 public class IBookImple implements IBook {
@@ -28,5 +29,14 @@ public class IBookImple implements IBook {
 		return BookList;
 
 	}
-
+//	@Override
+//	public BookInformation searchTitle(String title)
+//	{
+//		Session session = entityManager.unwrap(Session.class);
+//		Query q = session.createQuery("from BookInformation where book_name=:title");
+//		q.setParameter("book_name", title);
+//		System.out.println("in ses"+title);
+//		return (BookInformation) q.uniqueResult();
+//	}
 }
+

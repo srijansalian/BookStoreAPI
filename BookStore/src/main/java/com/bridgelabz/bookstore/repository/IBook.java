@@ -10,4 +10,6 @@ public interface IBook {
 
 	List<BookInformation> getUsers();
 
+	//BookInformation searchTitle(String title);
+
 }

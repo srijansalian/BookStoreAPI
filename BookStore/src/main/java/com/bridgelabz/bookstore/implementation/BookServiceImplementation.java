@@ -4,9 +4,12 @@ import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.service.IBookService;
+
+
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,5 +48,23 @@ public class BookServiceImplementation implements IBookService {
 
 		return users;
 	}
+
+	@Transactional
+	@Override
+	public BookInformation searchByTitle(String title) {
+		BookInformation title1=repository.searchTitle(title);
+		return title1;
+	}
+
+
+	@Transactional
+	@Override
+	public List<BookInformation> searchByAuthor(String authorname) {
+		List<BookInformation> authorname1=repository.searchAuthor(authorname);
+		return authorname1;
+	}
+	
+	
+	
 
 }

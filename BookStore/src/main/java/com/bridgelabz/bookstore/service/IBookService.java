@@ -11,4 +11,9 @@ public interface IBookService {
 
 	List<BookInformation> getBookInfo();
 
+
+	BookInformation searchByTitle(String title);
+
+	List<BookInformation> searchByAuthor(String authorname);
+
 }
