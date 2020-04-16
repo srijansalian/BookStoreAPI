@@ -26,10 +26,11 @@ public class BookStoreController {
 	@Autowired
 	IBookService bookservice;
 
-	@PostMapping("/add")
+	@PostMapping("/addbooks")
 	public ResponseEntity<BookResponse> addBook(@RequestBody BookDto information) {
 		bookservice.addBooks(information);
-		return null;
+		//return null;
+		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Book details are", information));
 	}
 
 	@GetMapping("/getbooks")

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ public class BookServiceImplementation implements IBookService {
 		bookinformation.setAuthorName(information.getAuthorName());
 		bookinformation.setPrice(information.getPrice());
 		bookinformation.setQuantity(information.getQuantity());
+		bookinformation.setCreatedDateAndTime(LocalDateTime.now());
 		repository.save(bookinformation);
 		return true;
 	}

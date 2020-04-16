@@ -1,5 +1,7 @@
 package com.bridgelabz.bookstore.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,15 @@ public class BookInformation {
 	private String authorName;
 	@NotNull
 	private String bookDetails;
+	private LocalDateTime createdDateAndTime;
+
+	public LocalDateTime getCreatedDateAndTime() {
+		return createdDateAndTime;
+	}
+
+	public void setCreatedDateAndTime(LocalDateTime createdDateAndTime) {
+		this.createdDateAndTime = createdDateAndTime;
+	}
 
 	public int getBookId() {
 		return bookId;
