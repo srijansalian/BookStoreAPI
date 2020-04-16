@@ -29,7 +29,7 @@ public class BookStoreController {
 	@PostMapping("/addbooks")
 	public ResponseEntity<BookResponse> addBook(@RequestBody BookDto information) {
 		bookservice.addBooks(information);
-		//return null;
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Book details are", information));
 	}
 
