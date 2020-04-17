@@ -5,7 +5,6 @@ import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.entity.CartInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.repository.CartImple;
-import com.bridgelabz.bookstore.repository.IBook;
 import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
@@ -25,14 +24,12 @@ public class BookServiceImplementation implements IBookService {
 //	private ModelMapper modelMapper;
 //	@Autowired
 //	private IBook repository;
-	
+
 	@Autowired
 	private BookImple repository;
-	
+
 	@Autowired
 	private CartImple cartrepository;
-	
-	
 
 	@Transactional
 	@Override
@@ -54,27 +51,20 @@ public class BookServiceImplementation implements IBookService {
 
 		return users;
 	}
-	
+
 	@Transactional
 	@Override
 	public boolean addtocart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
-		if(book.getQuantity()>=quantity) {
-		cartinformation.setUserId(userId);
-		cartinformation.setQuantity(quantity);
-		cartinformation.setBookId(bookId);
-		cartrepository.save(cartinformation);
-		return true;
-		}
-		else
-		return false;
-		//book.getList().add(userId, quantity,bookId);
-	//	repository.save(book);
-		
-		
-		
-		
-		
+		if (book.getQuantity() >= quantity) {
+			cartinformation.setUserId(userId);
+			cartinformation.setQuantity(quantity);
+			cartinformation.setBookId(bookId);
+			cartrepository.save(cartinformation);
+			return true;
+		} else
+			return false;
+
 	}
 
 }

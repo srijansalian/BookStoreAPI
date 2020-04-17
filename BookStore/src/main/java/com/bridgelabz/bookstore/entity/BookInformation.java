@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "bookinfo")
 public class BookInformation {
@@ -61,8 +62,6 @@ public class BookInformation {
 		this.bookName = bookName;
 	}
 
-
-
 	public String getBookDetails() {
 		return bookDetails;
 	}
@@ -94,6 +93,7 @@ public class BookInformation {
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
+
 	@ManyToMany(cascade = CascadeType.ALL)
 
 	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
@@ -102,8 +102,6 @@ public class BookInformation {
 
 	@JsonBackReference
 	private List<CartInformation> list;
-
-
 
 	public List<CartInformation> getList() {
 		return list;

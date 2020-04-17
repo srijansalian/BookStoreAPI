@@ -31,7 +31,7 @@ public class BookStoreController {
 	@PostMapping("/addbooks")
 	public ResponseEntity<BookResponse> addBook(@RequestBody BookDto information) {
 		bookservice.addBooks(information);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Book details are", information));
 	}
 
@@ -42,15 +42,15 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
 
 	}
+
 	@PostMapping("/addtocart")
-	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
-			@RequestParam("bookId") Long bookId) {
-		boolean value=bookservice.addtocart(userId, quantity, bookId);
-		if(value) {
-		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
-		}else
+	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId,
+			@RequestHeader("quantity") int quantity, @RequestParam("bookId") Long bookId) {
+		boolean value = bookservice.addtocart(userId, quantity, bookId);
+		if (value) {
+			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+		} else
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookResponse("Out of Stock", quantity));
-		
 
 	}
 
