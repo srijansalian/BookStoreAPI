@@ -2,7 +2,9 @@ package com.bridgelabz.bookstore.implementation;
 
 import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.entity.CartInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
+import com.bridgelabz.bookstore.repository.CartImple;
 import com.bridgelabz.bookstore.service.IBookService;
 
 import org.springframework.stereotype.Service;
@@ -11,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 @Service
 public class BookServiceImplementation implements IBookService {
 	private BookInformation bookinformation = new BookInformation();
+	private CartInformation cartinformation = new CartInformation();
 	private ModelMapper modelMapper = new ModelMapper();
 //	@Autowired
 //	private ModelMapper modelMapper;
@@ -25,6 +29,11 @@ public class BookServiceImplementation implements IBookService {
 
 	@Autowired
 	private BookImple repository;
+	
+	@Autowired
+	private CartImple cartrepository;
+	
+	
 
 	@Transactional
 	@Override
@@ -52,6 +61,25 @@ public class BookServiceImplementation implements IBookService {
 		List<BookInformation> list=repository.findAll();
 		list.sort((BookInformation book1,BookInformation book2)->book1.getPrice().compareTo(book2.getPrice()));
 		return list;
+	}
+
+	@Transactional
+	@Override
+	public void addtocart(Long userId, int quantity, Long bookId) {
+		
+		BookInformation book = repository.fetchbyId(bookId);
+		cartinformation.setUserId(userId);
+		cartinformation.setQuantity(quantity);
+		cartinformation.setBookId(bookId);
+		cartrepository.save(cartinformation);
+		System.out.println(book);
+		//book.getList().add(userId, quantity,bookId);
+		repository.save(book);
+		
+		
+		
+		
+		
 	}
 
 }

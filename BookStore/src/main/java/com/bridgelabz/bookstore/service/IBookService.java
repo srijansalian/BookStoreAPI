@@ -12,5 +12,7 @@ public interface IBookService {
 	List<BookInformation> getBookInfo();
 
 	List<BookInformation> sortGetAllBooks();
+	
+	void addtocart(Long userId, int quantity , Long bookId);
 
 }

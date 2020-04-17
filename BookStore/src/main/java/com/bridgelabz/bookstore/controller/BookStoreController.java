@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.bookstore.dto.BookDto;
@@ -44,6 +46,14 @@ public class BookStoreController {
 	public ResponseEntity<BookResponse> sort(){
 		List<BookInformation> list=bookservice.sortGetAllBooks();
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+	}
+	@PostMapping("/addtocart")
+	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
+			@RequestParam("bookId") Long bookId) {
+		bookservice.addtocart(userId, quantity, bookId);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+
 	}
 
 
