@@ -2,7 +2,9 @@ package com.bridgelabz.bookstore.implementation;
 
 import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.entity.CartInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
+import com.bridgelabz.bookstore.repository.CartImple;
 import com.bridgelabz.bookstore.repository.IBook;
 import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import javax.transaction.Transactional;
 @Service
 public class BookServiceImplementation implements IBookService {
 	private BookInformation bookinformation = new BookInformation();
+	private CartInformation cartinformation = new CartInformation();
 	private ModelMapper modelMapper = new ModelMapper();
 //	@Autowired
 //	private ModelMapper modelMapper;
@@ -25,6 +28,9 @@ public class BookServiceImplementation implements IBookService {
 	
 	@Autowired
 	private BookImple repository;
+	
+	@Autowired
+	private CartImple cartrepository;
 	
 	
 
@@ -47,6 +53,25 @@ public class BookServiceImplementation implements IBookService {
 		List<BookInformation> users = repository.findAll();
 
 		return users;
+	}
+	
+	@Transactional
+	@Override
+	public void addtocart(Long userId, int quantity, Long bookId) {
+		
+		BookInformation book = repository.fetchbyId(bookId);
+		cartinformation.setUserId(userId);
+		cartinformation.setQuantity(quantity);
+		cartinformation.setBookId(bookId);
+		cartrepository.save(cartinformation);
+		System.out.println(book);
+		//book.getList().add(userId, quantity,bookId);
+	//	repository.save(book);
+		
+		
+		
+		
+		
 	}
 
 }
