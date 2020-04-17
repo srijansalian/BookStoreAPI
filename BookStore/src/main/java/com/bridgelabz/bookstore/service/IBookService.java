@@ -10,7 +10,7 @@ public interface IBookService {
 	boolean addBooks(BookDto information);
 	List<BookInformation> getBookInfo();
 	
-	void addtocart(Long userId, int quantity , Long bookId);
+	boolean addtocart(Long userId, int quantity , Long bookId);
 
 }
 

@@ -45,9 +45,12 @@ public class BookStoreController {
 	@PostMapping("/addtocart")
 	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
 			@RequestParam("bookId") Long bookId) {
-		bookservice.addtocart(userId, quantity, bookId);
-
+		boolean value=bookservice.addtocart(userId, quantity, bookId);
+		if(value) {
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+		}else
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookResponse("Out of Stock", quantity));
+		
 
 	}
 
