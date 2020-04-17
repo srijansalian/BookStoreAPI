@@ -44,7 +44,7 @@ public class BookStoreController {
 	}
 
 	@PostMapping("/addtocart")
-	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId,
+	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,
 			@RequestHeader("quantity") int quantity, @RequestParam("bookId") Long bookId) {
 		boolean value = bookservice.addtocart(userId, quantity, bookId);
 		if (value) {
