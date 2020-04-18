@@ -74,7 +74,7 @@ public class BookServiceImplementation implements IBookService {
 		cartrepository.save(cartinformation);
 		System.out.println(book);
 		//book.getList().add(userId, quantity,bookId);
-		repository.save(book);
+		//repository.save(book);
 		
 		
 		
