@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -56,24 +55,30 @@ public class BookServiceImplementation implements IBookService {
 	@Transactional
 	@Override
 	public boolean addtocart(Long userId, int quantity, Long bookId) {
-//		BookInformation book = repository.fetchbyId(bookId);
-//		if (book.getQuantity() >= quantity) {
+		BookInformation book = repository.fetchbyId(bookId);
+		if (book.getQuantity() >= quantity) {
 			cartinformation.setUserId(userId);
 			cartinformation.setQuantity(quantity);
 			cartinformation.setBookId(bookId);
 			cartrepository.save(cartinformation);
 		return true;
-//		} else
-//			return false;
+		} else
+			return false;
 
 	}
 
 	@Transactional
 	@Override
 	public void removefromcart(Long userId, Long bookId) {
-		CartInformation cart =cartrepository.fetchbyId(bookId);
-		System.out.println(cart);
+		//CartInformation cart =cartrepository.fetchbyId(bookId);
+		//System.out.println(cart);
 	cartrepository.deletebyId(bookId);	
 	}
 
+	@Override
+	public List<BookInformation> sortGetAllBooks() {
+		List<BookInformation> list=repository.findAll();
+		list.sort((BookInformation book1,BookInformation book2)->book1.getPrice().compareTo(book2.getPrice()));
+		return list;
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class BookResponse {
 	BookInformation book;
 	private Object obj;
+
 	public Object getObj() {
 		return obj;
 	}
@@ -65,10 +66,10 @@ public class BookResponse {
 		this.bookList = bookList;
 	}
 
-	public BookResponse( String response ,  Object obj) {
+	public BookResponse(String response, Object obj) {
 		super();
 		this.obj = obj;
-		
+
 		this.response = response;
 	}
 
@@ -77,7 +78,5 @@ public class BookResponse {
 		this.statusCode = statusCode;
 		this.response = response;
 	}
-
-
 
 }

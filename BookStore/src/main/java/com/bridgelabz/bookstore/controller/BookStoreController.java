@@ -42,6 +42,20 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
 
 	}
+	@GetMapping("/sort")
+	public ResponseEntity<BookResponse> sort(){
+		List<BookInformation> list=bookservice.sortGetAllBooks();
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+	}
+//	@PostMapping("/addtocart")
+//	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
+//			@RequestParam("bookId") Long bookId) {
+//		bookservice.addtocart(userId, quantity, bookId);
+//
+//		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+//
+//	}
+
 
 	@PostMapping("/addtocart")
 	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,

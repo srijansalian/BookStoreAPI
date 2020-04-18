@@ -28,6 +28,7 @@ public class BookInformation {
 	@Column
 	@NotNull
 	private int quantity;
+
 	@Column
 	@NotNull
 	private Double price;
@@ -95,11 +96,9 @@ public class BookInformation {
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL)
-
 	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
 
 			@JoinColumn(name = "userId") })
-
 	@JsonBackReference
 	private List<CartInformation> list;
 
@@ -110,5 +109,5 @@ public class BookInformation {
 	public void setList(List<CartInformation> list) {
 		this.list = list;
 	}
-
+	
 }
