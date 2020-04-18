@@ -71,8 +71,8 @@ public class BookServiceImplementation implements IBookService {
 	@Transactional
 	@Override
 	public void removefromcart(Long userId, Long bookId) {
-//		Optional<CartInformation> cart =cartrepository.findById(bookId);
-//		System.out.println(cart);
+		CartInformation cart =cartrepository.fetchbyId(bookId);
+		System.out.println(cart);
 	cartrepository.deletebyId(bookId);	
 	}
 
