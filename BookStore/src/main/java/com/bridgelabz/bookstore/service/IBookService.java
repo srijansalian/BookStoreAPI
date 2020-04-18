@@ -11,6 +11,8 @@ public interface IBookService {
 	List<BookInformation> getBookInfo();
 	
 	boolean addtocart(Long userId, int quantity , Long bookId);
+	
+	void removefromcart(Long userId, Long bookId);
 
 }
 

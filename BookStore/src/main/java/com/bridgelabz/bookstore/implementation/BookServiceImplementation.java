@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -65,6 +66,14 @@ public class BookServiceImplementation implements IBookService {
 		} else
 			return false;
 
+	}
+
+	@Transactional
+	@Override
+	public void removefromcart(Long userId, Long bookId) {
+//		Optional<CartInformation> cart =cartrepository.findById(bookId);
+//		System.out.println(cart);
+	cartrepository.deletebyId(bookId);	
 	}
 
 }
