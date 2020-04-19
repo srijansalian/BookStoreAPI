@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.bookstore.entity.BookInformation;
 
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,5 @@ public interface BookImple extends JpaRepository<BookInformation, Long> {
 
 	@Query(value="select * from bookinfo where book_name=?",nativeQuery=true)
 	BookInformation searchTitle(String book_name);
+	
 }

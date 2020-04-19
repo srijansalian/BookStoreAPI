@@ -1,11 +1,13 @@
 package com.bridgelabz.bookstore.implementation;
 
 import com.bridgelabz.bookstore.dto.BookDto;
-import com.bridgelabz.bookstore.dto.Purchasedto;
+
+import com.bridgelabz.bookstore.dto.UserDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
-import com.bridgelabz.bookstore.entity.PurchaseInformation;
+
+import com.bridgelabz.bookstore.entity.UserInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
-import com.bridgelabz.bookstore.repository.PurchaseImple;
+import com.bridgelabz.bookstore.repository.UserImple;
 import com.bridgelabz.bookstore.service.IBookService;
 
 
@@ -23,7 +25,7 @@ import javax.transaction.Transactional;
 public class BookServiceImplementation implements IBookService {
 	private BookInformation bookinformation = new BookInformation();
 	private ModelMapper modelMapper = new ModelMapper();
-	private PurchaseInformation purchaseinformation=new PurchaseInformation();
+	private UserInformation userinformation=new UserInformation();
 //	@Autowired
 //	private ModelMapper modelMapper;
 //	@Autowired
@@ -32,7 +34,9 @@ public class BookServiceImplementation implements IBookService {
 	@Autowired
 	private BookImple repository;
 	@Autowired
-	private PurchaseImple purchaserepository;
+	private UserImple userrepository;
+	
+
 	@Transactional
 	@Override
 	public boolean addBooks(BookDto information) {
@@ -72,15 +76,21 @@ public class BookServiceImplementation implements IBookService {
 	
 	@Transactional
 	@Override
-	public boolean addAddress(Purchasedto information) {
-		purchaseinformation = modelMapper.map(information, PurchaseInformation.class);
-	//	bookinformation.setBookName(information.getBookName());
-		purchaseinformation.setAddress(information.getAddress());
-		purchaseinformation.setBookId(information.getBookId());
-		//purchaseinformation.setBookId(bookinformation.getBookId());
-		purchaserepository.save(purchaseinformation);
+	public boolean addAddress(String address,String email) {
+	
+		userinformation.setEmail(email);
+		userinformation.setAddress(address);
+		userinformation.setBookId(bookinformation.getBookId());
+		userrepository.save(userinformation);
 		return true;
 	
+	}
+	@Transactional
+	@Override
+	public UserInformation getOrdersPage(Long userId) {
+		UserInformation buyerspage = userrepository.findbyUserId(userId);
+
+		return buyerspage;
 	}
 
 }

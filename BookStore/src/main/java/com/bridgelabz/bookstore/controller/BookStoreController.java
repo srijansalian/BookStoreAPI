@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.bookstore.dto.BookDto;
-import com.bridgelabz.bookstore.dto.Purchasedto;
+
+import com.bridgelabz.bookstore.dto.UserDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.entity.UserInformation;
 import com.bridgelabz.bookstore.response.BookResponse;
 import com.bridgelabz.bookstore.service.IBookService;
 
@@ -58,11 +60,18 @@ public class BookStoreController {
 	}
 	
 	@PostMapping("/addAddress")
-	public ResponseEntity<BookResponse> addAddress(@RequestBody Purchasedto information) {
-		bookservice.addAddress(information);
+	public ResponseEntity<BookResponse> addAddress(@RequestParam("address")String address,@RequestParam("email")String email) {
+		bookservice.addAddress(address,email);
 		
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Address details are", information));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Address details are", address));
+	}
+	@GetMapping("/orderpage")
+	public ResponseEntity<BookResponse> getOrdersPage(@RequestParam("userId")Long userId) {
+		UserInformation orderdetails = bookservice.getOrdersPage(userId);
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The OrderDetails page", orderdetails));
+
 	}
 }
 

@@ -3,8 +3,10 @@ package com.bridgelabz.bookstore.service;
 import java.util.List;
 
 import com.bridgelabz.bookstore.dto.BookDto;
-import com.bridgelabz.bookstore.dto.Purchasedto;
+
+import com.bridgelabz.bookstore.dto.UserDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.entity.UserInformation;
 
 public interface IBookService {
 	// public ResponseEntity<BookResponse> addBooks(BookDto information);
@@ -17,6 +19,11 @@ public interface IBookService {
 
 	List<BookInformation> searchByAuthor(String authorname);
 
-	boolean addAddress(Purchasedto information);
+
+	boolean addAddress(String address, String email);
+
+
+
+	UserInformation getOrdersPage(Long userId);
 
 }
