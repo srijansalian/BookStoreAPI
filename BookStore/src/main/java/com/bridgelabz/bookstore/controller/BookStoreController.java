@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.bookstore.dto.BookDto;
+import com.bridgelabz.bookstore.dto.Purchasedto;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.response.BookResponse;
 import com.bridgelabz.bookstore.service.IBookService;
@@ -54,6 +55,14 @@ public class BookStoreController {
 	public ResponseEntity<BookResponse> searchAuthor(@RequestParam("authorName")String authorName) {
 		List<BookInformation> book= bookservice.searchByAuthor(authorName);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The book deatails ",book));
+	}
+	
+	@PostMapping("/addAddress")
+	public ResponseEntity<BookResponse> addAddress(@RequestBody Purchasedto information) {
+		bookservice.addAddress(information);
+		
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Address details are", information));
 	}
 }
 

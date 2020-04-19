@@ -1,8 +1,11 @@
 package com.bridgelabz.bookstore.implementation;
 
 import com.bridgelabz.bookstore.dto.BookDto;
+import com.bridgelabz.bookstore.dto.Purchasedto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.entity.PurchaseInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
+import com.bridgelabz.bookstore.repository.PurchaseImple;
 import com.bridgelabz.bookstore.service.IBookService;
 
 
@@ -20,6 +23,7 @@ import javax.transaction.Transactional;
 public class BookServiceImplementation implements IBookService {
 	private BookInformation bookinformation = new BookInformation();
 	private ModelMapper modelMapper = new ModelMapper();
+	private PurchaseInformation purchaseinformation=new PurchaseInformation();
 //	@Autowired
 //	private ModelMapper modelMapper;
 //	@Autowired
@@ -27,7 +31,8 @@ public class BookServiceImplementation implements IBookService {
 
 	@Autowired
 	private BookImple repository;
-
+	@Autowired
+	private PurchaseImple purchaserepository;
 	@Transactional
 	@Override
 	public boolean addBooks(BookDto information) {
@@ -65,6 +70,17 @@ public class BookServiceImplementation implements IBookService {
 	}
 	
 	
+	@Transactional
+	@Override
+	public boolean addAddress(Purchasedto information) {
+		purchaseinformation = modelMapper.map(information, PurchaseInformation.class);
+	//	bookinformation.setBookName(information.getBookName());
+		purchaseinformation.setAddress(information.getAddress());
+		purchaseinformation.setBookId(information.getBookId());
+		//purchaseinformation.setBookId(bookinformation.getBookId());
+		purchaserepository.save(purchaseinformation);
+		return true;
 	
+	}
 
 }
