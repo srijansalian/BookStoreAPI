@@ -1,14 +1,21 @@
 package com.bridgelabz.bookstore.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "bookinfo")
@@ -21,6 +28,8 @@ public class BookInformation {
 	@Column
 	@NotNull
 	private int quantity;
+
+
 	@Column
 	@NotNull
 	private Double price;
@@ -30,6 +39,8 @@ public class BookInformation {
 	@NotNull
 	private String bookDetails;
 	private LocalDateTime createdDateAndTime;
+
+
 
 	public LocalDateTime getCreatedDateAndTime() {
 		return createdDateAndTime;
@@ -86,5 +97,22 @@ public class BookInformation {
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
+	@ManyToMany(cascade = CascadeType.ALL)
 
+	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
+
+			@JoinColumn(name = "userId") })
+
+	@JsonBackReference
+	private List<CartInformation> list;
+
+
+
+	public List<CartInformation> getList() {
+		return list;
+	}
+
+	public void setList(List<CartInformation> list) {
+		this.list = list;
+	}
 }

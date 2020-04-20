@@ -12,6 +12,7 @@ public class BookDto {
 	private String authorName;
 	private String bookDetails;
 
+
 	public BookDto(String bookName, int quantity, Double price, String authorName, String bookDetails) {
 		this.bookName = bookName;
 		this.quantity = quantity;
@@ -59,5 +60,14 @@ public class BookDto {
 	public void setBookDetails(String bookDetails) {
 		this.bookDetails = bookDetails;
 	}
+
+//	public BookDto(String bookName, int quantity, Double price, String authorName, String bookDetails) {
+//		super();
+//		this.bookName = bookName;
+//		this.quantity = quantity;
+//		this.price = price;
+//		this.authorName = authorName;
+//		this.bookDetails = bookDetails;
+//	}
 
 }
