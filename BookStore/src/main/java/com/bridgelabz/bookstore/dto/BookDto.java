@@ -10,8 +10,15 @@ public class BookDto {
 
 	private Double price;
 	private String authorName;
-
 	private String bookDetails;
+
+	public BookDto(String bookName, int quantity, Double price, String authorName, String bookDetails) {
+		this.bookName = bookName;
+		this.quantity = quantity;
+		this.price = price;
+		this.authorName = authorName;
+		this.bookDetails = bookDetails;
+	}
 
 	public String getBookName() {
 		return bookName;
