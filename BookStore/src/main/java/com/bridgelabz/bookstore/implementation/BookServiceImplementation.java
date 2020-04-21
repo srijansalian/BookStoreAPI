@@ -56,29 +56,40 @@ public class BookServiceImplementation implements IBookService {
 	@Override
 	public boolean addtocart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
-		if (book.getQuantity() >= quantity) {
+		CartInformation cart = cartrepository.fetchbyId(bookId);
+		if (cart != null) {
+
+			int updatedquantity = cart.getQuantity() + quantity;
+			System.out.println(updatedquantity);
+			if (book.getQuantity() >= updatedquantity) {
+
+				cartrepository.verifyTheUser(updatedquantity, bookId);
+				return true;
+			} else
+				return false;
+		} else if (book.getQuantity() >= quantity) {
 			cartinformation.setUserId(userId);
 			cartinformation.setQuantity(quantity);
 			cartinformation.setBookId(bookId);
 			cartrepository.save(cartinformation);
-		return true;
-		} else
-			return false;
+			return true;
+		}
+		return false;
 
 	}
 
 	@Transactional
 	@Override
 	public void removefromcart(Long userId, Long bookId) {
-		//CartInformation cart =cartrepository.fetchbyId(bookId);
-		//System.out.println(cart);
-	cartrepository.deletebyId(bookId);	
+		// CartInformation cart =cartrepository.fetchbyId(bookId);
+		// System.out.println(cart);
+		cartrepository.deletebyId(bookId);
 	}
 
 	@Override
 	public List<BookInformation> sortGetAllBooks() {
-		List<BookInformation> list=repository.findAll();
-		list.sort((BookInformation book1,BookInformation book2)->book1.getPrice().compareTo(book2.getPrice()));
+		List<BookInformation> list = repository.findAll();
+		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
 		return list;
 	}
 }

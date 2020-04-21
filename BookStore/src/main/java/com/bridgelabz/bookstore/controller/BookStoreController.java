@@ -47,15 +47,6 @@ public class BookStoreController {
 		List<BookInformation> list=bookservice.sortGetAllBooks();
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
 	}
-//	@PostMapping("/addtocart")
-//	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
-//			@RequestParam("bookId") Long bookId) {
-//		bookservice.addtocart(userId, quantity, bookId);
-//
-//		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
-//
-//	}
-
 
 	@PostMapping("/addtocart")
 	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,
@@ -70,7 +61,7 @@ public class BookStoreController {
 	@PutMapping("/removefromcart")
 	public ResponseEntity<BookResponse> removelabel(@RequestParam("userId") Long userId, @RequestParam("bookId") Long bookId) {
 		bookservice.removefromcart(userId,bookId);
-		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Bokk has been removed from the cart", bookId));
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book has been removed from the cart", bookId));
 	}
 
 }
