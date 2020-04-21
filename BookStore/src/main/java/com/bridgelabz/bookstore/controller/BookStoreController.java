@@ -48,10 +48,10 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
 	}
 
-	@PostMapping("/addtocart")
+	@PostMapping("/addandupdatecart")
 	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,
 			@RequestHeader("quantity") int quantity, @RequestParam("bookId") Long bookId) {
-		boolean value = bookservice.addtocart(userId, quantity, bookId);
+		boolean value = bookservice.addandupdatecart(userId, quantity, bookId);
 		if (value) {
 			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
 		} else

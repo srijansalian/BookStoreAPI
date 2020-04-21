@@ -54,7 +54,7 @@ public class BookServiceImplementation implements IBookService {
 
 	@Transactional
 	@Override
-	public boolean addtocart(Long userId, int quantity, Long bookId) {
+	public boolean addandupdatecart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
 		CartInformation cart = cartrepository.fetchbyId(bookId);
 		if (cart != null) {
