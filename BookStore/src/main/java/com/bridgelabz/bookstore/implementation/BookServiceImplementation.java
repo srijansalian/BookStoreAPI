@@ -10,6 +10,7 @@ import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -65,20 +66,43 @@ public class BookServiceImplementation implements IBookService {
 
 	@Transactional
 	@Override
-	public void addtocart(Long userId, int quantity, Long bookId) {
+	public boolean addandupdatecart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
-		cartinformation.setUserId(userId);
-		cartinformation.setQuantity(quantity);
-		cartinformation.setBookId(bookId);
-		cartrepository.save(cartinformation);
-		System.out.println(book);
-		//book.getList().add(userId, quantity,bookId);
-		//repository.save(book);
-		
-		
-		
-		
-		
+		CartInformation cart = cartrepository.fetchbyId(bookId);
+		//Session session=new Session();
+		if (cart != null) {
+
+			int updatedquantity = cart.getQuantity() + quantity;
+			System.out.println(updatedquantity);
+			if (book.getQuantity() >= updatedquantity) {
+
+				cartrepository.verifyTheUser(updatedquantity, bookId);
+				return true;
+			} else
+				return false;
+		} else if (book.getQuantity() >= quantity) {
+			cartinformation.setUserId(userId);
+			cartinformation.setQuantity(quantity);
+			cartinformation.setBookId(bookId);
+			cartrepository.save(cartinformation);
+			return true;
+		}
+		return false;
+
 	}
+//	@Transactional
+//	@Override
+//	public String setPurchasingQuantity(Long userId, int quantity, Long bookId) {
+//		BookInformation bookid = repository.fetchbyId(bookId);
+//		System.out.println("bookid"+bookId);
+//		if(bookid.getQuantity()>=quantity) {
+//			cartinformation.setQuantity(bookid.getQuantity()-quantity);
+//			System.out.println(bookid.getQuantity()-quantity);
+//			cartrepository.save(cartinformation);
+//		}else {
+//		}
+//		return "";
+//
+//	}
 
 }

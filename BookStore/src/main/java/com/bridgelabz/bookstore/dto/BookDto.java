@@ -1,8 +1,5 @@
 package com.bridgelabz.bookstore.dto;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class BookDto {
 	private String bookName;
 

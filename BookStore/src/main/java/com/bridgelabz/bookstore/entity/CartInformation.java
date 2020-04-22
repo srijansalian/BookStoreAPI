@@ -13,6 +13,19 @@ public class CartInformation  {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)	
 private int cartId;
+private Long userId;
+private int quantity;
+private Long bookId;
+private boolean isOutOfStock;
+
+public boolean isOutOfStock() {
+	return isOutOfStock;
+}
+
+public void setOutOfStock(boolean isOutOfStock) {
+	this.isOutOfStock = isOutOfStock;
+}
+
 public int getCartId() {
 	return cartId;
 }
@@ -21,9 +34,6 @@ public void setCartId(int cartId) {
 	this.cartId = cartId;
 }
 
-private Long userId;
-private int quantity;
-private Long bookId;
 
 public Long getUserId() {
 	return userId;

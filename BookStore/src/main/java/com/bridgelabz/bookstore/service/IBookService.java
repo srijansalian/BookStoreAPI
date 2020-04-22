@@ -13,6 +13,8 @@ public interface IBookService {
 
 	List<BookInformation> sortGetAllBooks();
 	
-	void addtocart(Long userId, int quantity , Long bookId);
+	boolean addandupdatecart(Long userId, int quantity, Long bookId);
+
+	//String setPurchasingQuantity(Long userId, int quantity, Long bookId);
 
 }

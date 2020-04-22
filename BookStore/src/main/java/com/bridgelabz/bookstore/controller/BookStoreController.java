@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +47,24 @@ public class BookStoreController {
 		List<BookInformation> list=bookservice.sortGetAllBooks();
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
 	}
-	@PostMapping("/addtocart")
-	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
-			@RequestParam("bookId") Long bookId) {
-		bookservice.addtocart(userId, quantity, bookId);
-
-		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+	@PostMapping("/addandupdatecart")
+	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,
+			@RequestHeader("quantity") int quantity, @RequestParam("bookId") Long bookId) {
+		boolean value = bookservice.addandupdatecart(userId, quantity, bookId);
+		if (value) {
+			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+		} else
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookResponse("Out of Stock", quantity));
 
 	}
-
+//	@PutMapping("/addtocartupdated")
+//	public ResponseEntity<BookResponse>setQuantity(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
+//			@RequestParam("bookId") Long bookId){
+//		String orderNumber=bookservice.setPurchasingQuantity(userId, quantity, bookId);
+//		if(!orderNumber.isEmpty()) {
+//		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Order processed Successfully!", orderNumber));
+//	}
+//		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Oops... Error processing order!", orderNumber));
+//	}
 
 }

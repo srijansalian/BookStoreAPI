@@ -1,9 +1,24 @@
 package com.bridgelabz.bookstore.repository;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.bridgelabz.bookstore.entity.CartInformation;
 
 public interface CartImple extends JpaRepository<CartInformation, Long> {
+	@Modifying
+	@Query("DELETE FROM CartInformation WHERE book_id=:id")
+	void deletebyId(Long id);
+
+	@Query("from CartInformation where book_id=:id ")
+	CartInformation fetchbyId(Long id);
+
+	@Modifying
+	@Transactional
+	@Query(value = " update cartinfo set quantity=:qunt where book_id =:id ", nativeQuery = true)
+	void verifyTheUser(final int qunt, final Long id);
 
 }
