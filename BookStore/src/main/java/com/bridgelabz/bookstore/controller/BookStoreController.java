@@ -63,5 +63,10 @@ public class BookStoreController {
 		bookservice.removefromcart(userId,bookId);
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book has been removed from the cart", bookId));
 	}
+	@GetMapping("/sortbyhightolow")
+	public ResponseEntity<BookResponse> sortbyhigh(){
+		List<BookInformation> list=bookservice.sortbyhightolow();
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+	}
 
 }

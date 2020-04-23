@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -24,7 +25,6 @@ public class BookServiceImplementation implements IBookService {
 //	private ModelMapper modelMapper;
 //	@Autowired
 //	private IBook repository;
-
 	@Autowired
 	private BookImple repository;
 
@@ -90,6 +90,15 @@ public class BookServiceImplementation implements IBookService {
 	public List<BookInformation> sortGetAllBooks() {
 		List<BookInformation> list = repository.findAll();
 		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
+		return list;
+	}
+
+	@Transactional
+	@Override
+	public List<BookInformation> sortbyhightolow() {
+		List<BookInformation> list = repository.findAll();
+		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
+		Collections.reverse(list);
 		return list;
 	}
 }

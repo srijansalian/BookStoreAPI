@@ -2,6 +2,9 @@ package com.bridgelabz.bookstore.dto;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Data;
+
+@Data
 @Component
 public class BookDto {
 	private String bookName;
@@ -51,14 +54,4 @@ public class BookDto {
 	public void setBookDetails(String bookDetails) {
 		this.bookDetails = bookDetails;
 	}
-
-//	public BookDto(String bookName, int quantity, Double price, String authorName, String bookDetails) {
-//		super();
-//		this.bookName = bookName;
-//		this.quantity = quantity;
-//		this.price = price;
-//		this.authorName = authorName;
-//		this.bookDetails = bookDetails;
-//	}
-
 }
