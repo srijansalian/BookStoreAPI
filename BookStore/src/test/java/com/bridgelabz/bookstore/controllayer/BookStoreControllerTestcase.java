@@ -7,11 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Before;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -30,7 +29,7 @@ import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.implementation.BookServiceImplementation;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
+
 class BookStoreControllerTestcase extends BookStoreApplication {
 
 	@Autowired
@@ -44,7 +43,7 @@ class BookStoreControllerTestcase extends BookStoreApplication {
 	@Mock
 	BookDto dto;
 
-	@Before
+
 	public void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
