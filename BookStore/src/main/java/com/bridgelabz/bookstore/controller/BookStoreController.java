@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,21 +40,33 @@ public class BookStoreController {
 		List<BookInformation> books = bookservice.getBookInfo();
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
-
+ 
 	}
 	@GetMapping("/sort")
 	public ResponseEntity<BookResponse> sort(){
 		List<BookInformation> list=bookservice.sortGetAllBooks();
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
 	}
-	@PostMapping("/addtocart")
-	public ResponseEntity<BookResponse> addlabel(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
-			@RequestParam("bookId") Long bookId) {
-		bookservice.addtocart(userId, quantity, bookId);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+	@PostMapping("/addandupdatecart")
+	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,
+			@RequestHeader("quantity") int quantity, @RequestParam("bookId") Long bookId) {
+		boolean value = bookservice.addandupdatecart(userId, quantity, bookId);
+		if (value) {
+			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+		} else
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookResponse("Out of Stock", quantity));
 
 	}
-
+	@PutMapping("/removefromcart")
+	public ResponseEntity<BookResponse> removelabel(@RequestParam("userId") Long userId, @RequestParam("bookId") Long bookId) {
+		bookservice.removefromcart(userId,bookId);
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book has been removed from the cart", bookId));
+	}
+	@GetMapping("/sortbyhightolow")
+	public ResponseEntity<BookResponse> sortbyhigh(){
+		List<BookInformation> list=bookservice.sortbyhightolow();
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+	}
 
 }

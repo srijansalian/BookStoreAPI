@@ -10,9 +10,12 @@ public interface IBookService {
 	boolean addBooks(BookDto information);
 
 	List<BookInformation> getBookInfo();
+	void removefromcart(Long userId, Long bookId);
 
 	List<BookInformation> sortGetAllBooks();
 	
-	void addtocart(Long userId, int quantity , Long bookId);
+	List<BookInformation> sortbyhightolow();
+	
+	boolean addandupdatecart(Long userId, int quantity , Long bookId);
 
 }

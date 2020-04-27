@@ -6,14 +6,13 @@ import com.bridgelabz.bookstore.entity.CartInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.repository.CartImple;
 import com.bridgelabz.bookstore.service.IBookService;
-
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -25,15 +24,12 @@ public class BookServiceImplementation implements IBookService {
 //	@Autowired
 //	private ModelMapper modelMapper;
 //	@Autowired
-//	private IBook repo;
-
+//	private IBook repository;
 	@Autowired
 	private BookImple repository;
-	
+
 	@Autowired
 	private CartImple cartrepository;
-	
-	
 
 	@Transactional
 	@Override
@@ -55,30 +51,54 @@ public class BookServiceImplementation implements IBookService {
 
 		return users;
 	}
+
 	@Transactional
 	@Override
+	public boolean addandupdatecart(Long userId, int quantity, Long bookId) {
+		BookInformation book = repository.fetchbyId(bookId);
+		CartInformation cart = cartrepository.fetchbyId(bookId);
+		if (cart != null) {
+
+			int updatedquantity = cart.getQuantity() + quantity;
+			System.out.println(updatedquantity);
+			if (book.getQuantity() >= updatedquantity) {
+
+				cartrepository.verifyTheUser(updatedquantity, bookId);
+				return true;
+			} else
+				return false;
+		} else if (book.getQuantity() >= quantity) {
+			cartinformation.setUserId(userId);
+			cartinformation.setQuantity(quantity);
+			cartinformation.setBookId(bookId);
+			cartrepository.save(cartinformation);
+			return true;
+		}
+		return false;
+
+	}
+
+	@Transactional
+	@Override
+	public void removefromcart(Long userId, Long bookId) {
+		// CartInformation cart =cartrepository.fetchbyId(bookId);
+		// System.out.println(cart);
+		cartrepository.deletebyId(bookId);
+	}
+
+	@Override
 	public List<BookInformation> sortGetAllBooks() {
-		List<BookInformation> list=repository.findAll();
-		list.sort((BookInformation book1,BookInformation book2)->book1.getPrice().compareTo(book2.getPrice()));
+		List<BookInformation> list = repository.findAll();
+		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
 		return list;
 	}
 
 	@Transactional
 	@Override
-	public void addtocart(Long userId, int quantity, Long bookId) {
-		BookInformation book = repository.fetchbyId(bookId);
-		cartinformation.setUserId(userId);
-		cartinformation.setQuantity(quantity);
-		cartinformation.setBookId(bookId);
-		cartrepository.save(cartinformation);
-		System.out.println(book);
-		//book.getList().add(userId, quantity,bookId);
-		//repository.save(book);
-		
-		
-		
-		
-		
+	public List<BookInformation> sortbyhightolow() {
+		List<BookInformation> list = repository.findAll();
+		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
+		Collections.reverse(list);
+		return list;
 	}
-
 }
