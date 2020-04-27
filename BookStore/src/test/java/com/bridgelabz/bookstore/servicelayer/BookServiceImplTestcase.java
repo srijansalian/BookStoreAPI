@@ -25,7 +25,8 @@ import com.bridgelabz.bookstore.service.IBookService;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-
+import org.springframework.boot.test.context.SpringBootTest;
+@SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 class BookServiceImplTestcase {
 	 @InjectMocks
@@ -74,8 +75,11 @@ class BookServiceImplTestcase {
 //		list.add(book2);
 		
 		//when(dao).thenReturn(list);
-		
-		
 	
 	}
+	@Test
+	void testaddBookstocart() {
+		
+	}
+	
 }

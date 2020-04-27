@@ -71,11 +71,9 @@ public class BookServiceImplementation implements IBookService {
 		CartInformation cart = cartrepository.fetchbyId(bookId);
 		//Session session=new Session();
 		if (cart != null) {
-
 			int updatedquantity = cart.getQuantity() + quantity;
 			System.out.println(updatedquantity);
 			if (book.getQuantity() >= updatedquantity) {
-
 				cartrepository.verifyTheUser(updatedquantity, bookId);
 				return true;
 			} else

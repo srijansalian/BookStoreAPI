@@ -57,5 +57,10 @@ class BookStoreControllerTestcase  extends BookStoreApplication{
 		.andExpect(jsonPath("$.quantity").value(20)).andExpect(jsonPath("$.bookDetails").value("Intro"));
 		
 	}
+	@Test
+	void addbookstocart() throws Exception{
+		mockMvc.perform(get("/getbooks")).andExpect(status().isOk())
+		.andExpect(content().contentType("application/json;charset=UTF-8"));
+	}
 
 }
