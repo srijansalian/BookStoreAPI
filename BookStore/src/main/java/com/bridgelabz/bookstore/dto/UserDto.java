@@ -7,7 +7,7 @@ public class UserDto {
 	
 	private String email;
 	private String address;
-	private int bookId;
+	private String password;
 
 	public int getUserId() {
 		return userId;
@@ -25,12 +25,13 @@ public class UserDto {
 		this.email = email;
 	}
 
-	public int getBookId() {
-		return bookId;
+	
+	public String getPassword() {
+		return password;
 	}
 
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getAddress() {

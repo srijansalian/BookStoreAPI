@@ -8,8 +8,9 @@ import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.entity.UserInformation;
 import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.repository.UserImple;
+import com.bridgelabz.bookstore.response.MailData;
 import com.bridgelabz.bookstore.service.IBookService;
-
+import com.bridgelabz.bookstore.utility.MailService;
 
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
@@ -35,6 +36,8 @@ public class BookServiceImplementation implements IBookService {
 	private BookImple repository;
 	@Autowired
 	private UserImple userrepository;
+	@Autowired
+	private MailData maildata;
 	
 
 	@Transactional
@@ -76,11 +79,11 @@ public class BookServiceImplementation implements IBookService {
 	
 	@Transactional
 	@Override
-	public boolean addAddress(String address,String email) {
-	
-		userinformation.setEmail(email);
-		userinformation.setAddress(address);
-		userinformation.setBookId(bookinformation.getBookId());
+	public boolean registeration(UserDto information) {
+		userinformation.setPassword(information.getPassword());
+		userinformation.setEmail(information.getEmail());
+		userinformation.setAddress(information.getAddress());
+		
 		userrepository.save(userinformation);
 		return true;
 	
@@ -91,6 +94,18 @@ public class BookServiceImplementation implements IBookService {
 		UserInformation buyerspage = userrepository.findbyUserId(userId);
 
 		return buyerspage;
+	}
+	
+	@Transactional
+	@Override
+	public UserInformation sendConfirOrder(Long userId) {
+		UserInformation user = userrepository.findbyUserId(userId);
+		UserDto information=new UserDto();
+		maildata.setEmail(user.getEmail());
+		maildata.setMessage("Your Order Is Placed");
+		maildata.setSubject("verification");
+		MailService.SendEmail(maildata.getEmail(), maildata.getSubject(), maildata.getMessage());
+		return user;
 	}
 
 }

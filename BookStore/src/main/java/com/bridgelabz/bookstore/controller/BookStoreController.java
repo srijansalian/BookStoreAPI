@@ -59,18 +59,27 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The book deatails ",book));
 	}
 	
-	@PostMapping("/addAddress")
-	public ResponseEntity<BookResponse> addAddress(@RequestParam("address")String address,@RequestParam("email")String email) {
-		bookservice.addAddress(address,email);
+	@PostMapping("/register")
+	public ResponseEntity<BookResponse> addAddress(@RequestBody UserDto information) {
+		bookservice.registeration(information);
 		
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The Address details are", address));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The  details added", information));
 	}
 	@GetMapping("/orderpage")
 	public ResponseEntity<BookResponse> getOrdersPage(@RequestParam("userId")Long userId) {
 		UserInformation orderdetails = bookservice.getOrdersPage(userId);
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The OrderDetails page", orderdetails));
+
+	}
+	
+	
+	@GetMapping("/confirmorder")
+	public ResponseEntity<BookResponse> getConfirmOrder(@RequestParam("userId")Long userId) {
+		UserInformation mail = bookservice.sendConfirOrder(userId);
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Orderconfirm page", mail));
 
 	}
 }

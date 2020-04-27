@@ -14,10 +14,10 @@ public class UserInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
-
+	@NotNull
 	private String email;
-	
-	private int bookId;
+	@NotNull
+	private String password;
 	@NotNull
 	private String address;
 	public int getUserId() {
@@ -29,15 +29,17 @@ public class UserInformation {
 	public String getEmail() {
 		return email;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getBookId() {
-		return bookId;
-	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
+
+	
 	public String getAddress() {
 		return address;
 	}

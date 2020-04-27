@@ -20,10 +20,13 @@ public interface IBookService {
 	List<BookInformation> searchByAuthor(String authorname);
 
 
-	boolean addAddress(String address, String email);
 
 
 
 	UserInformation getOrdersPage(Long userId);
+
+	UserInformation sendConfirOrder(Long userId);
+
+	boolean registeration(UserDto information);
 
 }
