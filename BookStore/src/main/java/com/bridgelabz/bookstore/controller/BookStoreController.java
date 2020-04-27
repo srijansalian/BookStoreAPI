@@ -21,7 +21,7 @@ import com.bridgelabz.bookstore.response.BookResponse;
 import com.bridgelabz.bookstore.service.IBookService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin 
 @RequestMapping("/books")
 public class BookStoreController {
 
