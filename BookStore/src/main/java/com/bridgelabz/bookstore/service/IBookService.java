@@ -10,6 +10,7 @@ public interface IBookService {
 	boolean addBooks(BookDto information);
 
 	List<BookInformation> getBookInfo();
+	void removefromcart(Long userId, Long bookId);
 
 	List<BookInformation> sortGetAllBooks();
 	

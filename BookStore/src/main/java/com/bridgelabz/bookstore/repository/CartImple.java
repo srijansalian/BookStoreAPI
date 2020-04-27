@@ -6,8 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
 import com.bridgelabz.bookstore.entity.CartInformation;
 
+@Repository
 public interface CartImple extends JpaRepository<CartInformation, Long> {
 	@Modifying
 	@Query("DELETE FROM CartInformation WHERE book_id=:id")

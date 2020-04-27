@@ -1,4 +1,5 @@
 package com.bridgelabz.bookstore.entity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -6,7 +7,9 @@ import javax.persistence.Id;
 
 import javax.persistence.Table;
 
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "cartinfo")
 public class CartInformation  {
@@ -53,10 +56,6 @@ public void setQuantity(int quantity) {
 
 public Long getBookId() {
 	return bookId;
-}
-
-public void setBookId(Long bookId) {
-	this.bookId = bookId;
 }
 
 }

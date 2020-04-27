@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-@Component 
+@Component
 public class BookResponse {
 	BookInformation book;
 	private Object obj;
