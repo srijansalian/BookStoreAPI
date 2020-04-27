@@ -17,14 +17,6 @@ public class CartInformation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartId;
 
-	public int getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-
 	private Long userId;
 	private int quantity;
 	private Long bookId;

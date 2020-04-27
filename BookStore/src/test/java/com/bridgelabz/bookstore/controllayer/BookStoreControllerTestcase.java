@@ -60,7 +60,8 @@ class BookStoreControllerTestcase extends BookStoreApplication {
 //				.andExpect(jsonPath("$.bookName").value("India")).andExpect(jsonPath("$.authorName").value("srijan"))
 //				.andExpect(jsonPath("$.bookId").value("1")).andExpect(jsonPath("$.price").value(3000))
 //				.andExpect(jsonPath("$.quantity").value(20)).andExpect(jsonPath("$.bookDetails").value("Intro"));
-	//	BookInformation info = new BookInformation(1,"hello",10,20.0,"hii","hii","2020-04-18 10:26:20 ","hu");
+		//BookInformation info = new BookInformation(1,"hello",10,20.0,"hii","hii",2020-04-18 10:26:20 );
+	
 
 	}
 
