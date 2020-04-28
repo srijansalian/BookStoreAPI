@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +37,10 @@ public class BookInformation {
 
 	private String bookDetails;
 	private LocalDateTime createdDateAndTime;
+	
+	@Column(length = 10000)
+    private String image;
+
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
