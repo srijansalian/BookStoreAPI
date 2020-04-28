@@ -140,4 +140,19 @@ public class BookServiceImplementation implements IBookService {
 		Collections.reverse(list);
 		return list;
 	}
+	@Override
+	public List<BookInformation> sorting(boolean value){
+		List<BookInformation> list = repository.findAll();
+		if(value==true) {
+		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
+		return list;
+		}
+		else {
+			list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
+			Collections.reverse(list);
+			return list;
+		}
+	}
+
+	
 }
