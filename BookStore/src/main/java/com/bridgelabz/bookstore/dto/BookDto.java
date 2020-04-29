@@ -13,7 +13,7 @@ public class BookDto {
 
 	private Double price;
 	private String authorName;
-
+	private String image;
 	private String bookDetails;
 
 }

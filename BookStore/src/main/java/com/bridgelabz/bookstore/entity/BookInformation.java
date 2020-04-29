@@ -37,6 +37,7 @@ public class BookInformation {
 
 	private String bookDetails;
 	private LocalDateTime createdDateAndTime;
+	private String image;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {

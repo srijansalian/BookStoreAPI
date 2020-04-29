@@ -43,7 +43,7 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
  
 	}
-	@GetMapping("/sort")
+	@GetMapping("/SortNewestArrival")
 	public ResponseEntity<BookResponse> sort(){
 		List<BookInformation> list=bookservice.sortGetAllBooks();
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
@@ -73,11 +73,7 @@ public class BookStoreController {
 		bookservice.removefromcart(userId,bookId);
 		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book has been removed from the cart", bookId));
 	}
-	@GetMapping("/sortbyhightolow")
-	public ResponseEntity<BookResponse> sortbyhigh(){
-		List<BookInformation> list=bookservice.sortbyhightolow();
-		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
-	}
+	
 	@GetMapping("/sorting")
 	public ResponseEntity<BookResponse> sorting(@RequestParam("value") boolean value){
 		List<BookInformation> list=bookservice.sorting( value);

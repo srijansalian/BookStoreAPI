@@ -87,10 +87,11 @@ public class BookServiceImplementation implements IBookService {
 		cartrepository.deletebyId(bookId);
 	}
 
+	@Transactional
 	@Override
 	public List<BookInformation> sortGetAllBooks() {
 		List<BookInformation> list = repository.findAll();
-		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
+		list.sort((BookInformation book1, BookInformation book2) -> book1.getCreatedDateAndTime().compareTo(book2.getCreatedDateAndTime()));
 		return list;
 	}
 
@@ -134,12 +135,7 @@ public class BookServiceImplementation implements IBookService {
 //	}
 
 //}
-	public List<BookInformation> sortbyhightolow() {
-		List<BookInformation> list = repository.findAll();
-		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
-		Collections.reverse(list);
-		return list;
-	}
+	
 	@Override
 	public List<BookInformation> sorting(boolean value){
 		List<BookInformation> list = repository.findAll();
