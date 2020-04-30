@@ -13,20 +13,16 @@ public interface IBookService {
 	boolean addBooks(BookDto information);
 
 	List<BookInformation> getBookInfo();
+	void removefromcart(Long userId, Long bookId);
+
+	List<BookInformation> sortGetAllBooks();
+	
+//	boolean addandupdatecart(Long userId, int quantity, Long bookId);
 
 
-	BookInformation searchByTitle(String title);
+	List<BookInformation> sorting(boolean value);
 
-	List<BookInformation> searchByAuthor(String authorname);
-
-
-
-
-
-	UserInformation getOrdersPage(Long userId);
-
-	UserInformation sendConfirOrder(Long userId);
-
-	boolean registeration(UserDto information);
+	//String setPurchasingQuantity(Long userId, int quantity, Long bookId);
 
 }
+

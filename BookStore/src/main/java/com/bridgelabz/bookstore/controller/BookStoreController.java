@@ -9,12 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bridgelabz.bookstore.dto.BookDto;
 
@@ -45,41 +46,48 @@ public class BookStoreController {
 		List<BookInformation> books = bookservice.getBookInfo();
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Book details are", books));
+ 
+	}
+	@GetMapping("/SortNewestArrival")
+	public ResponseEntity<BookResponse> sort(){
+		List<BookInformation> list=bookservice.sortGetAllBooks();
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+	}
 
+//	@PostMapping("/addandupdatecart")
+//	public ResponseEntity<BookResponse> addtocart(@RequestParam("userId") Long userId,
+//			@RequestHeader("quantity") int quantity, @RequestParam("bookId") Long bookId) {
+//		boolean value = bookservice.addandupdatecart(userId, quantity, bookId);
+//		if (value) {
+//			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book is added to cart ", quantity));
+//		} else
+//			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookResponse("Out of Stock", quantity));
+//
+//	}
+//	@PutMapping("/addtocartupdated")
+//	public ResponseEntity<BookResponse>setQuantity(@RequestParam("userId") Long userId, @RequestHeader("quantity") int quantity,
+//			@RequestParam("bookId") Long bookId){
+//		String orderNumber=bookservice.setPurchasingQuantity(userId, quantity, bookId);
+//		if(!orderNumber.isEmpty()) {
+//		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Order processed Successfully!", orderNumber));
+//	}
+//		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Oops... Error processing order!", orderNumber));
+//	}
+	@PutMapping("/removefromcart")
+	public ResponseEntity<BookResponse> removelabel(@RequestParam("userId") Long userId, @RequestParam("bookId") Long bookId) {
+		bookservice.removefromcart(userId,bookId);
+		return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("Book has been removed from the cart", bookId));
 	}
-	@GetMapping("/searchbytitle")
-	public ResponseEntity<BookResponse> searchTitle(@RequestParam("title")String title) {
-		BookInformation book= bookservice.searchByTitle(title);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The book deatails ",book));
-	}
+
 	
-	@GetMapping("/searchbyauthor")
-	public ResponseEntity<BookResponse> searchAuthor(@RequestParam("authorName")String authorName) {
-		List<BookInformation> book= bookservice.searchByAuthor(authorName);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The book deatails ",book));
-	}
-	
-	@PostMapping("/register")
-	public ResponseEntity<BookResponse> addAddress(@RequestBody UserDto information) {
-		bookservice.registeration(information);
-		
-
-		return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse("The  details added", information));
-	}
-	@GetMapping("/orderpage")
-	public ResponseEntity<BookResponse> getOrdersPage(@RequestParam("userId")Long userId) {
-		UserInformation orderdetails = bookservice.getOrdersPage(userId);
-
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The OrderDetails page", orderdetails));
-
-	}
-	
-	
-	@GetMapping("/confirmorder")
-	public ResponseEntity<BookResponse> getConfirmOrder(@RequestParam("userId")Long userId) {
-		UserInformation mail = bookservice.sendConfirOrder(userId);
-
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("The Orderconfirm page", mail));
+	@GetMapping("/sorting")
+	public ResponseEntity<BookResponse> sorting(@RequestParam("value") boolean value){
+		List<BookInformation> list=bookservice.sorting( value);
+		if (value==true) {
+			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
+		}
 
 	}
 }
