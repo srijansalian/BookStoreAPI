@@ -67,39 +67,6 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookResponse(400, "Failed"));
 	}
 	
-//   @PostMapping( value = "/registration")
-//   public ResponseEntity<BookResponse> customerRegistration( @RequestBody CustomerDto dto) {
-//	  String is_registered = bookservice.customerRegistration(dto);
-//	  if( is_registered != null)
-//		  return ResponseEntity.status(HttpStatus.CREATED).body( new BookResponse("Successfully Registered..", is_registered));
-//	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed to Register..", is_registered));
-//   }
-//	  
-//   @GetMapping( value = "/getCustomerDetails")
-//   public ResponseEntity<BookResponse> getCustomerDetails( @RequestHeader( value = "token") String token) {
-//	   CustomerInformation info = bookservice.getCustomerDetails(token);
-//	   if( info != null)
-//		   return ResponseEntity.status(HttpStatus.OK).body( new BookResponse(" CustomerInformation is :", info));
-//	   return ResponseEntity.status(HttpStatus.NOT_FOUND).body( new BookResponse(" CustomerInformation Not Found", 401)); 
-//   }
-//   
-//   @GetMapping( value = "/searchbyNameandPhoneNumber/{name}/{phonenumber}")
-//   public ResponseEntity<BookResponse> searchbyNameandPhoneNumber( @PathVariable( value = "name") String name,
-//		                                                           @PathVariable( value = "phonenumber") long phonenumber) {
-//	   String is_found = bookservice.getCustomerTokenbyNameandPhonenumber(name, phonenumber);
-//		  if( is_found != null)
-//			  return ResponseEntity.status(HttpStatus.OK).body( new BookResponse("Customer Details Found..", is_found));
-//		  return ResponseEntity.status(HttpStatus.NOT_FOUND).body( new BookResponse("Not Found..", is_found));
-//   }
-//
-//   @PostMapping( value = "/addQuantity/{bookId}/{quantity}")
-//   public ResponseEntity<BookResponse> addQuantity( @PathVariable( value = "bookId") long bookId,
-//		                                            @PathVariable( value = "quantity") int quantity ) {
-//	   boolean is_added = bookservice.addQuantity(bookId, quantity);
-//	   if(is_added == true)
-//		   return ResponseEntity.status(HttpStatus.CREATED).body( new BookResponse("Successfully Added Quantity..", is_added));
-//		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed to Add Quantity..", is_added));
-//   }
   
 @GetMapping( value = "/setToCartAndGetBookDetails/{bookId}")
 public ResponseEntity<BookResponse> getBookDetails( @PathVariable( value = "bookId") long bookId) {
@@ -131,7 +98,7 @@ public ResponseEntity<BookResponse> addCustomerDetails( @RequestBody CustomerDto
 		                                                @PathVariable( value = "type") String type) {
 	boolean is_created = bookservice.addCustomerDetails(dto, type);
 	if( is_created == true)
-		return ResponseEntity.status(HttpStatus.CREATED).body( new BookResponse("Created is:", is_created));
+		return ResponseEntity.status(HttpStatus.CREATED).body( new BookResponse("Added Customer Details is:", is_created));
 	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed to Create :", is_created));
 }
 

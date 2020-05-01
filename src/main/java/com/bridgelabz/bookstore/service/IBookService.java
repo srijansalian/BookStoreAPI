@@ -18,14 +18,6 @@ public interface IBookService {
 
 	List<BookInformation> findAllPageBySize( int pagenumber);
 	
-//	String customerRegistration( CustomerDto dto);
-//	
-//	CustomerInformation getCustomerDetails( String token);
-//	
-//	String getCustomerTokenbyNameandPhonenumber( String name, long phonenumber);
-//	
-//	boolean addQuantity( long bookId, int quantity);
-	
 	BookInformation getBookfromCart( long bookId);
 	
 	boolean deletefromCart( long bookId);

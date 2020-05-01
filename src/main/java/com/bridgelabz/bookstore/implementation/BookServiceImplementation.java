@@ -200,59 +200,5 @@ public class BookServiceImplementation implements IBookService {
 		return true;
 	}
 
-	
-	
-//	@Override
-//	public String customerRegistration(CustomerDto dto) {
-//       CustomerInformation customerinfo	= customerrep.getCustomerbyDetails(dto.getName(), dto.getPhonenumber());
-//		if( customerinfo == null) {
-//			CustomerInformation info = new CustomerInformation();
-//			info.setAddress(dto.getAddress());
-//			info.setCity(dto.getCity());
-//			info.setLandmark(dto.getLandmark());
-//			info.setLocality(dto.getLocality());
-//			info.setName(dto.getName());
-//			info.setPhonenumber(dto.getPhonenumber());
-//			info.setPincode(dto.getPincode());
-//			info.setType(dto.getType());
-//			customerrep.save(info);
-//			System.out.println("Id ::"+ info.getUserId()); 
-//			String token = jwt.getToken(info.getUserId());
-//			return token;
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public CustomerInformation getCustomerDetails(String token) {
-//	long customerId = jwt.getId(token);
-//	CustomerInformation info = customerrep.getCustomerDetailsbyId(customerId);
-//	if( info != null) {
-//		return info;
-//	}
-//		return null;
-//	}
-//
-//	@Override
-//	public String getCustomerTokenbyNameandPhonenumber(String name, long phonenumber) {
-//		CustomerInformation info = customerrep.getCustomerbyDetails(name, phonenumber);
-//		if( info != null) {
-//			long customerId = info.getUserId();
-//			System.out.println("ID::::"+customerId); 
-//			String token = jwt.getToken( customerId);
-//			return token;
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean addQuantity(long bookId, int quantity) {
-//		BookInformation info = repository.fetchbyId(bookId);
-//		if( info != null) {
-//			repository.addQuantity(bookId, quantity);
-//			return true;
-//		}
-//		return false;
-//	}
 
 }
