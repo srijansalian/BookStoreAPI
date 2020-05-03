@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bridgelabz.bookstore.dto.BookDto;
+import com.bridgelabz.bookstore.dto.CustomerDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.response.BookResponse;
 import com.bridgelabz.bookstore.service.IBookService;
@@ -84,4 +87,48 @@ public class BookStoreController {
 		}
 
 	}
+	@GetMapping( value = "/getallbookspagewise/{pagenumber}")
+	public ResponseEntity<BookResponse> getBookPagewise( @PathVariable( value = "pagenumber") int pagenumber) {
+		List<BookInformation> pageList = bookservice.findAllPageBySize( pagenumber);
+		if( pageList != null) 
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("Successfull", pageList));
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookResponse(400, "Failed"));
+	}
+	
+  
+@GetMapping( value = "/setToCartAndGetBookDetails/{bookId}")
+public ResponseEntity<BookResponse> getBookDetails( @PathVariable( value = "bookId") long bookId) {
+	BookInformation bookinfo = bookservice.getBookfromCart(bookId);
+	if( bookinfo != null)
+		 return ResponseEntity.status(HttpStatus.OK).body( new BookResponse("Book Details Found..", bookinfo));
+	 return ResponseEntity.status(HttpStatus.NOT_FOUND).body( new BookResponse("Book Details are Not Found..", bookinfo));
+}
+   
+@DeleteMapping( value = "/deleteBookfromCart/{bookId}")
+public ResponseEntity<BookResponse> deletefromCart( @PathVariable( value = "bookId") long bookId) {
+	boolean is_deleted = bookservice.deletefromCart(bookId);
+	if( is_deleted == true)
+		return ResponseEntity.status(HttpStatus.OK).body( new BookResponse("Cart Detail Deleted Successfully..", is_deleted));
+	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed to Delete Cart..", is_deleted));
+}
+
+@PostMapping( value = "/getTotalPriceofBookwithDetails/{bookId}/{quantity}")
+public ResponseEntity<BookResponse> getTotalPriceofBookwithDetails( @PathVariable( value = "bookId") long bookId, 
+		                                                            @PathVariable( value = "quantity") int quantity) {
+	BookInformation info = bookservice.getTotalPriceofBook(bookId, quantity);
+	if(info != null) 
+		return ResponseEntity.status(HttpStatus.OK).body( new BookResponse("Book Detail are :", info));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed..", info));
+}
+
+@PostMapping( value = "/addCustomerDetails/{type}")
+public ResponseEntity<BookResponse> addCustomerDetails( @RequestBody CustomerDto dto,
+		                                                @PathVariable( value = "type") String type) {
+	boolean is_created = bookservice.addCustomerDetails(dto, type);
+	if( is_created == true)
+		return ResponseEntity.status(HttpStatus.CREATED).body( new BookResponse("Added Customer Details is:", is_created));
+	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed to Create :", is_created));
+}
+
 }
