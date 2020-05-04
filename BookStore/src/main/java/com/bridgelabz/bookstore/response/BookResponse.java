@@ -1,6 +1,5 @@
 package com.bridgelabz.bookstore.response;
 
-import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import java.util.List;
 

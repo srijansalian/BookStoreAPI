@@ -1,11 +1,7 @@
 package com.bridgelabz.bookstore.repository;
 
 import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,6 +22,6 @@ public interface CartImple extends JpaRepository<CartInformation, Long> {
 	@Query(value = " update cartinfo set quantity=:qunt where book_id =:id ", nativeQuery = true)
 	void verifyTheUser(final int qunt, final Long id);
 
-	@Query(value = "select * from cartinfo where book_id=:id ", nativeQuery = true)
+	@Query(value = "select * from cartinfo where cart_id=:id ", nativeQuery = true)
 	CartInformation findCartbyId(long id);
 }
