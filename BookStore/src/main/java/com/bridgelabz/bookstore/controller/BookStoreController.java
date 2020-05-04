@@ -117,6 +117,7 @@ public ResponseEntity<BookResponse> deletefromCart( @PathVariable( value = "book
 public ResponseEntity<BookResponse> getTotalPriceofBookwithDetails( @PathVariable( value = "bookId") long bookId, 
 		                                                            @PathVariable( value = "quantity") int quantity) {
 	BookInformation info = bookservice.getTotalPriceofBook(bookId, quantity);
+	System.out.println(info+"gettotalprice");
 	if(info != null) 
 		return ResponseEntity.status(HttpStatus.OK).body( new BookResponse("Book Detail are :", info));
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new BookResponse("Failed..", info));

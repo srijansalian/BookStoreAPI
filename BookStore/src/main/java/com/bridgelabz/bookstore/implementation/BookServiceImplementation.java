@@ -185,9 +185,10 @@ public class BookServiceImplementation implements IBookService {
 		cartinfo.setBookId(bookId);
 		cartrepository.save(cartinfo);
 		long cartId = cartinfo.getCartId();
-		CartInformation info = cartrepository.fetchbyId(cartId);
+		CartInformation info = cartrepository.findCartbyId(cartId);
 		if (info != null) {
 			BookInformation bookinfo = repository.fetchbyId(info.getBookId());
+			System.out.println(bookinfo);
 			if (bookinfo != null) {
 				return bookinfo;
 			}
