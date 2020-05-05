@@ -14,4 +14,8 @@ public interface CustomerRepository extends JpaRepository<CustomerInformation, L
 	
 	@Query( value = "select * from customer_info where customer_id = :customer_id", nativeQuery = true)
 	CustomerInformation getCustomerDetailsbyId( long customer_id);
+	
+	@Query( value = "select * from customer_info where customer_name = :name and customer_phonenumber = :phonenumber", nativeQuery = true)
+	CustomerInformation getCustomerInfo( String name, long phonenumber);
+
 }

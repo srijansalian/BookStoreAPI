@@ -1,5 +1,6 @@
 package com.bridgelabz.bookstore.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,12 +20,14 @@ public class CustomerInformation {
 	private String Name;
 	@Column(name = "customer_phonenumber")
 	private long Phonenumber;
-	@OneToOne
+	@OneToOne( cascade = CascadeType.ALL, targetEntity = Address.class)
 	private Address Home;
-	@OneToOne
+	@OneToOne( cascade = CascadeType.ALL, targetEntity = Address.class)
 	private Address Work;
-	@OneToOne
+	@OneToOne( cascade = CascadeType.ALL, targetEntity = Address.class)
 	private Address Others;
+	
+	
 	
 	public long getUserId() {
 		return userId;

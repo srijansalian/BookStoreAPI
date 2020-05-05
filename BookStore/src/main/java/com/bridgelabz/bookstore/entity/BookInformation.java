@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -25,7 +26,7 @@ import lombok.Data;
 public class BookInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int bookId;
+	private long bookId;
 
 	private String bookName;
 
@@ -34,9 +35,14 @@ public class BookInformation {
 	private Double price;
 
 	private String authorName;
-
+	
+	@ManyToOne( targetEntity = CartInformation.class)
+	private CartInformation cartId;
+	
 	private String bookDetails;
+	
 	private LocalDateTime createdDateAndTime;
+	
 	private String image;
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -46,11 +52,11 @@ public class BookInformation {
 	@JsonBackReference
 	private List<CartInformation> list;
 
-	public int getBookId() {
+	public long getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(int bookId) {
+	public void setBookId(long bookId) {
 		this.bookId = bookId;
 	}
 
@@ -117,5 +123,15 @@ public class BookInformation {
 	public void setList(List<CartInformation> list) {
 		this.list = list;
 	}
+
+	public CartInformation getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(CartInformation cartId) {
+		this.cartId = cartId;
+	}
+
+	
 
 }

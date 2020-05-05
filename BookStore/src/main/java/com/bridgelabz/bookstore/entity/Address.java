@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +15,7 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "address_id")
-	private long addressId;
+		private long addressId;
 
 	@Column(name = "customer_pincode")
 	private long Pincode;
@@ -30,9 +31,10 @@ public class Address {
 
 	@Column(name = "customer_landmark")
 	private String Landmark;
-	@Column(name = "user_id")
-	private long userId;
 
+	@OneToOne
+	private CustomerInformation customerinfo;
+	
 	public long getAddressId() {
 		return addressId;
 	}
@@ -81,12 +83,13 @@ public class Address {
 		Landmark = landmark;
 	}
 
-	public long getUserId() {
-		return userId;
+
+	public CustomerInformation getCustomerinfo() {
+		return customerinfo;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setCustomerinfo(CustomerInformation customerinfo) {
+		this.customerinfo = customerinfo;
 	}
 
 }
