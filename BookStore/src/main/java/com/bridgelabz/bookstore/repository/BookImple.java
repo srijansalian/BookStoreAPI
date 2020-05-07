@@ -19,6 +19,7 @@ public interface BookImple extends JpaRepository<BookInformation, Long> {
     List<BookInformation> findAllPage(Pageable pageable);
 	
 
-
+	@Query("from BookInformation where book_id=:id ")
+	List<BookInformation> fetchbyIdList(Long id);
 
 }

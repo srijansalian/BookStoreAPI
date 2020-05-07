@@ -1,5 +1,7 @@
 package com.bridgelabz.bookstore.implementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,8 @@ public class CustomerserviceImplimentation implements Customerservice {
 	@Override
 	public BookInformation getBookfromCart(long bookId, long userId) {
 		CartInformation cartinfo = new CartInformation();
+		List<BookInformation> book = repository.fetchbyIdList(bookId);
+		cartinfo.setBook(book);
 		cartinfo.setBookId(bookId);
 		cartinfo.setUserId(userId); 
 		cartrepository.save(cartinfo);
@@ -85,9 +89,16 @@ public class CustomerserviceImplimentation implements Customerservice {
 
 	@Override
 	public boolean addCustomerDetails(CustomerDto dto, String variable) {
+		
+		if( dto.getPincode() != 0 && dto.getLocality() != null && dto.getAddress() != null &&
+			dto.getCity() != null && dto.getLandmark() != null && dto.getName() != null && dto.getPhonenumber() != 0) {
+			CustomerInformation infer = customerrep.getCustomerInfo(dto.getName(), dto.getPhonenumber());
+			if( infer != null) {
+				return false;
+			}
+			if( infer == null) {
 		Address addinfo = new Address();
 		CustomerInformation info = new CustomerInformation();
-		
 		addinfo.setPincode(dto.getPincode());
 		addinfo.setLocality(dto.getLocality());
 		addinfo.setAddress(dto.getAddress());
@@ -99,7 +110,7 @@ public class CustomerserviceImplimentation implements Customerservice {
 		info.setPhonenumber(dto.getPhonenumber());
 		customerrep.save(info);
 		
-		addinfo.setUserId(info.getUserId());
+//		addinfo.setUserId(info.getUserId());
 		addrepository.save(addinfo);
 		
 		customerrep.save(info);
@@ -115,6 +126,10 @@ public class CustomerserviceImplimentation implements Customerservice {
 		if( variable.equals("Other")) {
 			info.setOthers(addinfo); 
 			customerrep.save(info);
+		}
+		addinfo.setCustomerinfo(info);
+		addrepository.save(addinfo);
+		}
 		}
 		
 		return true;

@@ -64,6 +64,7 @@ public class BookServiceImplementation implements IBookService {
 	@Override
 	public boolean addandupdatecart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
+		List<BookInformation> books = repository.fetchbyIdList(bookId);
 		CartInformation cart = cartrepository.fetchbyId(bookId);
 		if (cart != null) {
 
@@ -78,7 +79,7 @@ public class BookServiceImplementation implements IBookService {
 		} else if (book.getQuantity() >= quantity) {
 			cartinformation.setUserId(userId);
 			cartinformation.setQuantity(quantity);
-			cartinformation.setBookId(bookId);
+			cartinformation.setBook(books);
 			cartrepository.save(cartinformation);
 			return true;
 		}
