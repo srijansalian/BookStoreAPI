@@ -85,15 +85,8 @@ public class BookStoreController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookResponse(400, "Failed"));
 	}
 	
-  
-
-
-
-
-
-
 	@GetMapping( value = "/getbookbyId/{bookId}")
- public ResponseEntity<BookResponse> getBookbyId( @PathVariable("bookId") long bookId) {
+	public ResponseEntity<BookResponse> getBookbyId( @PathVariable("bookId") long bookId) {
 		BookInformation info = bookservice.getBookbyId(bookId);
 		if(info != null)
 			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",info));
