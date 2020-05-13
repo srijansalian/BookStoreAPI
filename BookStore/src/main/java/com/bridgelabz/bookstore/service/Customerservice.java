@@ -15,4 +15,5 @@ public interface Customerservice {
 	
 	boolean addCustomerDetails( CustomerDto dto, String variable);
 	
+	
 }

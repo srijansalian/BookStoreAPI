@@ -2,6 +2,7 @@ package com.bridgelabz.bookstore.implementation;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.bridgelabz.bookstore.entity.Address;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.entity.CartInformation;
 import com.bridgelabz.bookstore.entity.CustomerInformation;
+//import com.bridgelabz.bookstore.entity.QuantityEntity;
 import com.bridgelabz.bookstore.repository.AddressRepository;
 import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.repository.CartImple;
@@ -27,15 +29,18 @@ public class CustomerserviceImplimentation implements Customerservice {
 	CustomerRepository customerrep;
 	@Autowired
 	AddressRepository addrepository;
+
 	
-	@Override
 	public BookInformation getBookfromCart(long bookId, long userId) {
 		CartInformation cartinfo = new CartInformation();
+		
 		List<BookInformation> book = repository.fetchbyIdList(bookId);
 		cartinfo.setBook(book);
 		cartinfo.setBookId(bookId);
 		cartinfo.setUserId(userId); 
+				
 		cartrepository.save(cartinfo);
+	
 		long cartId = cartinfo.getCartId();
 		CartInformation info = cartrepository.findCartbyId(cartId);
 		if (info != null) {
@@ -45,6 +50,7 @@ public class CustomerserviceImplimentation implements Customerservice {
 			}
 		}
 		return null;
+		
 	}
 
 	@Override
@@ -135,4 +141,6 @@ public class CustomerserviceImplimentation implements Customerservice {
 		return true;
 	}
 
+	
+	
 }

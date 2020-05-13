@@ -18,10 +18,10 @@ public interface CartImple extends JpaRepository<CartInformation, Long> {
 	CartInformation fetchbyId(Long id);
 
 	@Modifying
-	@Transactional
 	@Query(value = " update cartinfo set quantity=:qunt where book_id =:id ", nativeQuery = true)
 	void verifyTheUser(final int qunt, final Long id);
 
+	@Modifying
 	@Query(value = "select * from cartinfo where cart_id=:id ", nativeQuery = true)
 	CartInformation findCartbyId(long id);
 }
