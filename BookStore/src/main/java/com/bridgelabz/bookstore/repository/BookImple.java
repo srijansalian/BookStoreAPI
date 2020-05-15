@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface BookImple extends JpaRepository<BookInformation, Long> {
@@ -19,11 +18,9 @@ public interface BookImple extends JpaRepository<BookInformation, Long> {
 	@Query( value = "select * from bookinfo", nativeQuery = true)
     List<BookInformation> findAllPage(Pageable pageable);
 	
+	@Query( value = "select * from bookinfo", nativeQuery = true)
+    List<BookInformation> getAllBooks();
 
 	@Query("from BookInformation where book_id=:id ")
 	List<BookInformation> fetchbyIdList(Long id);
-
-	
-	
-	
 }

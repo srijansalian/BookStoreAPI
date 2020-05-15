@@ -55,7 +55,7 @@ public class BookServiceImplementation implements IBookService {
 	@Transactional
 	@Override
 	public List<BookInformation> getBookInfo() {
-		List<BookInformation> users = repository.findAll();
+		List<BookInformation> users = repository.getAllBooks();
 
 		return users;
 	}
@@ -64,11 +64,10 @@ public class BookServiceImplementation implements IBookService {
 	@Override
 	public boolean addandupdatecart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
-		List<BookInformation> books = repository.fetchbyIdList(bookId);
 		CartInformation cart = cartrepository.fetchbyId(bookId);
 		if (cart != null) {
-
-			int updatedquantity = cart.getQuantity() + quantity;
+//			cart.getQuantity()
+			int updatedquantity =   quantity;
 			System.out.println(updatedquantity);
 			if (book.getQuantity() >= updatedquantity) {
 
@@ -77,9 +76,9 @@ public class BookServiceImplementation implements IBookService {
 			} else
 				return false;
 		} else if (book.getQuantity() >= quantity) {
-			cartinformation.setUserId(userId);
-			cartinformation.setQuantity(quantity);
-			cartinformation.setBook(books);
+//			cartinformation.setUserId(userId);
+//			cartinformation.setQuantity(quantity);
+//			cartinformation.setBookId(bookId);
 			cartrepository.save(cartinformation);
 			return true;
 		}
@@ -87,6 +86,36 @@ public class BookServiceImplementation implements IBookService {
 
 	}
 
+	public double getOriginalPrice(double price, int quantity) {
+		long result = (long) (price / quantity);
+		return result;
+	}
+
+	@Override
+	public BookInformation getTotalPriceofBook(long bookId, int quantity) {
+		BookInformation bookinfo = repository.fetchbyId(bookId);
+		double Price = bookinfo.getPrice();
+		int Quantity = quantity;
+		if (Quantity <= bookinfo.getQuantity() || Quantity >= bookinfo.getQuantity()) {
+			if (bookinfo != null && quantity > 0) {
+				double price = getOriginalPrice(Price, bookinfo.getQuantity());
+				double totalPrice = (price * Quantity);
+				bookinfo.setQuantity(quantity);
+				bookinfo.setPrice(totalPrice);
+				repository.save(bookinfo);
+				return bookinfo;
+			} else if (bookinfo != null && quantity < 1) {
+				double price = getOriginalPrice(Price, bookinfo.getQuantity());
+				double totalPrice = (price * 1);
+				bookinfo.setQuantity(quantity);
+				bookinfo.setPrice(totalPrice);
+				repository.save(bookinfo);
+				return bookinfo;
+			}
+		}
+		return null;
+	}
+	
 	@Transactional
 	@Override
 	public void removefromcart(Long userId, Long bookId) {
@@ -161,13 +190,10 @@ public class BookServiceImplementation implements IBookService {
 	@Override
 	public List<BookInformation> findAllPageBySize(int pagenumber) {
 		long count = repository.count();
-		System.out.println("count ::" + count);
-		int pageSize = 3;
+		int pageSize = 2;
 		int pages = (int) ((count / pageSize));
 		int i = pagenumber; // i should start with zero or 0...
 		while (i <= pages) {
-			System.out.println("display pages::" + pages);
-			System.out.println("Pages ::" + i);
 			List<BookInformation> list = repository.findAllPage(PageRequest.of(i, pageSize));
 			i++;
 			return list;

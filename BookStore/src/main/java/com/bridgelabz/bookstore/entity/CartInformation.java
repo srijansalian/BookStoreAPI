@@ -1,17 +1,16 @@
 package com.bridgelabz.bookstore.entity;
 
 import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -21,12 +20,12 @@ public class CartInformation  {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)	
 private long cartId;
-private Long userId;
-private int quantity;
-@OneToMany
-private List<BookInformation> book;
+@OneToOne
+private CustomerInformation userId;
+@ManyToMany
+@JsonIgnore
+private List<BookInformation> bookId;
 
-private long bookId;
 
 public long getCartId() {
 	return cartId;
@@ -36,52 +35,21 @@ public void setCartId(long cartId) {
 	this.cartId = cartId;
 }
 
-
-public Long getUserId() {
+public CustomerInformation getUserId() {
 	return userId;
 }
 
-public void setUserId(Long userId) {
+public void setUserId(CustomerInformation userId) {
 	this.userId = userId;
 }
 
-public int getQuantity() {
-	return quantity;
-}
-
-public void setQuantity(int quantity) 
-{
-	this.quantity = quantity;
-}
-
-public List<BookInformation> getBook()
-{
-	return book;
-}
-
-public void setBook(List<BookInformation> book) 
-{
-	this.book = book;
-}
-
-public long getBookId() {
+public List<BookInformation> getBookId() {
 	return bookId;
 }
 
-public void setBookId(long bookId)
-{
+public void setBookId(List<BookInformation> bookId) {
 	this.bookId = bookId;
 }
-	/*
-	 * @ManyToMany(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "Cart_Quantity", joinColumns = { @JoinColumn(name =
-	 * "cartId")},inverseJoinColumns ={@JoinColumn(name = "quantity_id") }) private
-	 * List<QuantityEntity> quantitylist;
-	 */
-
-
-
 
 
 }

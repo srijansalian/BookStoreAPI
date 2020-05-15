@@ -22,4 +22,6 @@ public interface IBookService {
 	
 	BookInformation getBookbyId( long bookId);
 	
+	BookInformation getTotalPriceofBook( long bookId, int quantity);
+	
 }

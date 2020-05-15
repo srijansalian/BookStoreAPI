@@ -2,7 +2,6 @@ package com.bridgelabz.bookstore.implementation;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,6 @@ import com.bridgelabz.bookstore.entity.Address;
 import com.bridgelabz.bookstore.entity.BookInformation;
 import com.bridgelabz.bookstore.entity.CartInformation;
 import com.bridgelabz.bookstore.entity.CustomerInformation;
-//import com.bridgelabz.bookstore.entity.QuantityEntity;
 import com.bridgelabz.bookstore.repository.AddressRepository;
 import com.bridgelabz.bookstore.repository.BookImple;
 import com.bridgelabz.bookstore.repository.CartImple;
@@ -29,33 +27,22 @@ public class CustomerserviceImplimentation implements Customerservice {
 	CustomerRepository customerrep;
 	@Autowired
 	AddressRepository addrepository;
-
 	
-	public BookInformation getBookfromCart(long bookId, long userId) {
+	@Override
+	public List<BookInformation> getBookfromCart(long bookId, long userId) {
+		CustomerInformation details = customerrep.getCustomerDetailsbyId(userId);
 		CartInformation cartinfo = new CartInformation();
-		
 		List<BookInformation> book = repository.fetchbyIdList(bookId);
-		cartinfo.setBook(book);
-		cartinfo.setBookId(bookId);
-		cartinfo.setUserId(userId); 
-				
+		cartinfo.setBookId(book);
+		cartinfo.setUserId(details); 
 		cartrepository.save(cartinfo);
-	
-		long cartId = cartinfo.getCartId();
-		CartInformation info = cartrepository.findCartbyId(cartId);
-		if (info != null) {
-			BookInformation bookinfo = repository.fetchbyId(info.getBookId());
-			if (bookinfo != null) {
+			List<BookInformation> bookinfo = repository.fetchbyIdList(bookId);
 				return bookinfo;
 			}
-		}
-		return null;
-		
-	}
 
 	@Override
-	public boolean deletefromCart(long bookId) {
-		CartInformation cartinfo = cartrepository.findCartbyId(bookId);
+	public boolean deletefromCart(long bookId, long cartId) {
+		CartInformation cartinfo = cartrepository.cartbyId(cartId, bookId);
 		if (cartinfo != null) {
 			cartrepository.delete(cartinfo);
 			return true;
@@ -63,84 +50,92 @@ public class CustomerserviceImplimentation implements Customerservice {
 		return false;
 	}
 	
-	public double getOriginalPrice(double price, int quantity) {
-		long result = (long) (price / quantity);
-		return result;
-	}
+//	public double getOriginalPrice(double price, int quantity) {
+//		long result = (long) (price / quantity);
+//		return result;
+//	}
+//
+//	@Override
+//	public BookInformation getTotalPriceofBook(long bookId, int quantity) {
+//		BookInformation bookinfo = repository.fetchbyId(bookId);
+//		double Price = bookinfo.getPrice();
+//		int Quantity = quantity;
+//		if (Quantity <= bookinfo.getQuantity() || Quantity >= bookinfo.getQuantity()) {
+//			if (bookinfo != null && quantity > 0) {
+//				double price = getOriginalPrice(Price, bookinfo.getQuantity());
+//				double totalPrice = (price * Quantity);
+//				bookinfo.setQuantity(quantity);
+//				bookinfo.setPrice(totalPrice);
+//				repository.save(bookinfo);
+//				return bookinfo;
+//			} else if (bookinfo != null && quantity < 1) {
+//				double price = getOriginalPrice(Price, bookinfo.getQuantity());
+//				double totalPrice = (price * 1);
+//				bookinfo.setQuantity(quantity);
+//				bookinfo.setPrice(totalPrice);
+//				repository.save(bookinfo);
+//				return bookinfo;
+//			}
+//		}
+//		return null;
+//	}
 
+	@SuppressWarnings("null")
 	@Override
-	public BookInformation getTotalPriceofBook(long bookId, int quantity) {
-		BookInformation bookinfo = repository.fetchbyId(bookId);
-		double Price = bookinfo.getPrice();
-		int Quantity = quantity;
-		if (Quantity <= bookinfo.getQuantity() || Quantity >= bookinfo.getQuantity()) {
-			if (bookinfo != null && quantity > 0) {
-				double price = getOriginalPrice(Price, bookinfo.getQuantity());
-				double totalPrice = (price * Quantity);
-				bookinfo.setQuantity(quantity);
-				bookinfo.setPrice(totalPrice);
-				repository.save(bookinfo);
-				return bookinfo;
-			} else if (bookinfo != null && quantity < 1) {
-				double price = getOriginalPrice(Price, bookinfo.getQuantity());
-				double totalPrice = (price * 1);
-				bookinfo.setQuantity(quantity);
-				bookinfo.setPrice(totalPrice);
-				repository.save(bookinfo);
-				return bookinfo;
-			}
-		}
-		return null;
-	}
+	public CustomerInformation addCustomerDetails(CustomerDto dto) {
 
-	@Override
-	public boolean addCustomerDetails(CustomerDto dto, String variable) {
-		
-		if( dto.getPincode() != 0 && dto.getLocality() != null && dto.getAddress() != null &&
-			dto.getCity() != null && dto.getLandmark() != null && dto.getName() != null && dto.getPhonenumber() != 0) {
-			CustomerInformation infer = customerrep.getCustomerInfo(dto.getName(), dto.getPhonenumber());
-			if( infer != null) {
-				return false;
-			}
-			if( infer == null) {
-		Address addinfo = new Address();
+CustomerInformation customer = customerrep.getCustomerbyDetails(dto.getName(), dto.getPhonenumber());
+    System.out.println("-----------"+customer); 
 		CustomerInformation info = new CustomerInformation();
-		addinfo.setPincode(dto.getPincode());
-		addinfo.setLocality(dto.getLocality());
-		addinfo.setAddress(dto.getAddress());
-		addinfo.setCity(dto.getCity());
-		addinfo.setLandmark(dto.getLandmark());
-		addrepository.save(addinfo);
+		Address address = new Address();
+		Address home = dto.getHome();
+		Address work = dto.getWork();
+		Address Other = dto.getOther();
+		if( customer == null ) {
+		if(home != null && home.getPincode() != 0 ) {
+			System.out.println("+++++++++++++++");
+			address.setAddress(home.getAddress());
+			address.setCity(home.getCity());
+			address.setLandmark(home.getLandmark());
+			address.setLocality(home.getLocality());
+			address.setPincode(home.getPincode());
+			addrepository.save(address);
+			info.setName(dto.getName());
+			info.setPhonenumber(dto.getPhonenumber());
+			info.setHome(address); 
+		customerrep.save(info); 
+		}
+		if(work != null && work.getPincode() != 0 ) {
+			System.out.println("+++++++++++++++");
+			address.setAddress(work.getAddress());
+			address.setCity(work.getCity());
+			address.setLandmark(work.getLandmark());
+			address.setLocality(work.getLocality());
+			address.setPincode(work.getPincode());
+			addrepository.save(address);
+			info.setName(dto.getName());
+			info.setPhonenumber(dto.getPhonenumber());
+			info.setWork(address); 
+		customerrep.save(info); 
+		}
+		if(Other != null && Other.getPincode() != 0) {
+			System.out.println("+++++++++++++++");
+			address.setAddress(Other.getAddress());
+			address.setCity(Other.getCity());
+			address.setLandmark(Other.getLandmark());
+			address.setLocality(Other.getLocality());
+			address.setPincode(Other.getPincode());
+			addrepository.save(address);
+			info.setName(dto.getName());
+			info.setPhonenumber(dto.getPhonenumber());
+			info.setOthers(address); 
+		customerrep.save(info); 
+		}
+		}
+    
+		return info;
 		
-		info.setName(dto.getName());
-		info.setPhonenumber(dto.getPhonenumber());
-		customerrep.save(info);
-		
-//		addinfo.setUserId(info.getUserId());
-		addrepository.save(addinfo);
-		
-		customerrep.save(info);
-		 
-		if(variable.equals("Home")) {
-		    info.setHome(addinfo); 
-		    customerrep.save(info);
-		}
-		if( variable.equals("Work")) {
-			info.setWork(addinfo);
-			customerrep.save(info);
-		}
-		if( variable.equals("Other")) {
-			info.setOthers(addinfo); 
-			customerrep.save(info);
-		}
-		addinfo.setCustomerinfo(info);
-		addrepository.save(addinfo);
-		}
-		}
-		
-		return true;
+
 	}
 
-	
-	
 }

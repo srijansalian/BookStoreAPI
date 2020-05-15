@@ -2,24 +2,14 @@ package com.bridgelabz.bookstore.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -29,8 +19,8 @@ import lombok.Data;
 public class BookInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long bookId;
-
+	private int bookId;
+	
 	private String bookName;
 
 	private int quantity;
@@ -38,28 +28,36 @@ public class BookInformation {
 	private Double price;
 
 	private String authorName;
-	
-	@ManyToOne( targetEntity = CartInformation.class)
-	private CartInformation cartId;
-	
+
 	private String bookDetails;
-	
 	private LocalDateTime createdDateAndTime;
-	
 	private String image;
+	@ManyToMany(mappedBy = "bookId")
+    @JsonIgnore
+    private List<CartInformation> cartId;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
+	public BookInformation() {
+		super();
+	}
+	
+	public BookInformation(int bookId, String bookName, int quantity, Double price, String authorName,
+			String bookDetails, String image, LocalDateTime createdDateAndTime) {
+		super();
+		this.bookId = bookId;
+		this.bookName = bookName;
+		this.quantity = quantity;
+		this.price = price;
+		this.authorName = authorName;
+		this.bookDetails = bookDetails;
+		this.image = image;
+		this.createdDateAndTime = createdDateAndTime;
+	}
 
-			@JoinColumn(name = "userId") })
-	@JsonBackReference
-	private List<CartInformation> list;
-
-	public long getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(long bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
 
@@ -119,25 +117,5 @@ public class BookInformation {
 		this.image = image;
 	}
 
-	public List<CartInformation> getList() {
-		return list;
-	}
-
-	public void setList(List<CartInformation> list) {
-		this.list = list;
-	}
-
-	public CartInformation getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(CartInformation cartId) {
-		this.cartId = cartId;
-	}
-	/*
-	 * @OneToMany(cascade = CascadeType.ALL,mappedBy="bookquantity") private
-	 * List<QuantityEntity> quantityenty;
-	 * 
-	 */
 
 }

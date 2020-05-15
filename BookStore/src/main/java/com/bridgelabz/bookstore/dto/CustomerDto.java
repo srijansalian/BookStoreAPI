@@ -1,21 +1,16 @@
 package com.bridgelabz.bookstore.dto;
 
 import org.springframework.stereotype.Component;
-
-import com.bridgelabz.bookstore.entity.CustomerInformation;
+import com.bridgelabz.bookstore.entity.Address;
 
 @Component
 public class CustomerDto {
 	
 	private String Name;
 	private long Phonenumber;
-	private long Pincode;
-	private String Locality;
-	private String Address;
-	private String City;
-	private String Landmark;
-	private CustomerInformation Type;
-	
+	private Address Home;
+	private Address Work;
+	private Address Other;
 	public String getName() {
 		return Name;
 	}
@@ -32,62 +27,35 @@ public class CustomerDto {
 		Phonenumber = phonenumber;
 	}
 
-	public long getPincode() {
-		return Pincode;
+	public Address getHome() {
+		return Home;
 	}
 
-	public void setPincode(long pincode) {
-		Pincode = pincode;
+	public void setHome(Address home) {
+		Home = home;
 	}
 
-	public String getLocality() {
-		return Locality;
+	public Address getWork() {
+		return Work;
 	}
 
-	public void setLocality(String locality) {
-		Locality = locality;
+	public void setWork(Address work) {
+		Work = work;
 	}
 
-	public String getAddress() {
-		return Address;
+	public Address getOther() {
+		return Other;
 	}
 
-	public void setAddress(String address) {
-		Address = address;
-	}
-
-	public String getCity() {
-		return City;
-	}
-
-	public void setCity(String city) {
-		City = city;
-	}
-
-	public String getLandmark() {
-		return Landmark;
-	}
-
-	public void setLandmark(String landmark) {
-		Landmark = landmark;
-	}
-
-	public CustomerInformation getType() {
-		return Type;
-	}
-
-	public void setType(CustomerInformation type) {
-		Type = type;
+	public void setOther(Address other) {
+		Other = other;
 	}
 
 	@Override
 	public String toString() {
-		return "CustomerDto [Name=" + Name + ", Phonenumber=" + Phonenumber + ", Pincode=" + Pincode + ", Locality="
-				+ Locality + ", Address=" + Address + ", City=" + City + ", Landmark=" + Landmark + ", Type=" + Type
-				+ "]";
+		return "CustomerDto [Name=" + Name + ", Phonenumber=" + Phonenumber + ", Home=" + Home + ", Work=" + Work
+				+ ", Other=" + Other + "]";
 	}
 
-	
-	
 	
 }

@@ -4,16 +4,16 @@ import java.util.List;
 
 import com.bridgelabz.bookstore.dto.CustomerDto;
 import com.bridgelabz.bookstore.entity.BookInformation;
+import com.bridgelabz.bookstore.entity.CustomerInformation;
 
 public interface Customerservice {
 
-    BookInformation getBookfromCart( long bookId, long userId);
+    List<BookInformation> getBookfromCart( long bookId, long userId);
 	
-	boolean deletefromCart( long bookId);
+	boolean deletefromCart( long bookId, long cartId);
 	
-	BookInformation getTotalPriceofBook( long bookId, int quantity);
+//	BookInformation getTotalPriceofBook( long bookId, int quantity);
 	
-	boolean addCustomerDetails( CustomerDto dto, String variable);
-	
+	CustomerInformation addCustomerDetails( CustomerDto dto);
 	
 }
