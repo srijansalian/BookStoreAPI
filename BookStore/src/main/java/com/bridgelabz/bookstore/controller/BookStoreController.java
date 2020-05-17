@@ -22,7 +22,7 @@ import com.bridgelabz.bookstore.response.BookResponse;
 import com.bridgelabz.bookstore.service.IBookService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin( origins = "*", allowedHeaders = "*")
 @RequestMapping("/books")
 public class BookStoreController {
 
@@ -67,7 +67,7 @@ public class BookStoreController {
 	}
 	
 	@GetMapping("/sorting")
-	public ResponseEntity<BookResponse> sorting(@RequestParam("value") boolean value){
+	public ResponseEntity<BookResponse> sorting(@RequestParam("value") Boolean value){
 		List<BookInformation> list=bookservice.sorting( value);
 		if (value==true) {
 			return ResponseEntity.status(HttpStatus.OK).body(new BookResponse("all books",list));
@@ -76,7 +76,7 @@ public class BookStoreController {
 		}
 
 	}
-	@GetMapping( value = "/getallbookspagewise/{pagenumber}")
+	@GetMapping( value = "/getpagewise/{pagenumber}")
 	public ResponseEntity<BookResponse> getBookPagewise( @PathVariable( value = "pagenumber") int pagenumber) {
 		List<BookInformation> pageList = bookservice.findAllPageBySize( pagenumber);
 		if( pageList != null) 

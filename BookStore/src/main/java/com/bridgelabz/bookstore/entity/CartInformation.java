@@ -1,12 +1,11 @@
 package com.bridgelabz.bookstore.entity;
 
-import java.util.List;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -19,11 +18,8 @@ public class CartInformation  {
 @GeneratedValue(strategy = GenerationType.IDENTITY)	
 private long cartId;
 private Long userId;
-private int quantity;
-@OneToMany
-private List<BookInformation> book;
+private Long bookId;
 
-private long bookId;
 
 public long getCartId() {
 	return cartId;
@@ -42,32 +38,12 @@ public void setUserId(Long userId) {
 	this.userId = userId;
 }
 
-public int getQuantity() {
-	return quantity;
-}
-
-public void setQuantity(int quantity) {
-	this.quantity = quantity;
-}
-
-public List<BookInformation> getBook() {
-	return book;
-}
-
-public void setBook(List<BookInformation> book) {
-	this.book = book;
-}
-
-public long getBookId() {
+public Long getBookId() {
 	return bookId;
 }
 
-public void setBookId(long bookId) {
+public void setBookId(Long bookId) {
 	this.bookId = bookId;
 }
-
-
-
-
 
 }

@@ -1,11 +1,11 @@
 package com.bridgelabz.bookstore.entity;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +15,7 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "address_id")
-		private long addressId;
+	private long addressId;
 
 	@Column(name = "customer_pincode")
 	private long Pincode;
@@ -32,9 +32,7 @@ public class Address {
 	@Column(name = "customer_landmark")
 	private String Landmark;
 
-	@OneToOne
-	private CustomerInformation customerinfo;
-	
+
 	public long getAddressId() {
 		return addressId;
 	}
@@ -84,12 +82,5 @@ public class Address {
 	}
 
 
-	public CustomerInformation getCustomerinfo() {
-		return customerinfo;
-	}
-
-	public void setCustomerinfo(CustomerInformation customerinfo) {
-		this.customerinfo = customerinfo;
-	}
 
 }

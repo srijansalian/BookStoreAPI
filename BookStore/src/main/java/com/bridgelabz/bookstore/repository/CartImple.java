@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.bookstore.entity.CartInformation;
-
 @Repository
 public interface CartImple extends JpaRepository<CartInformation, Long> {
 	@Modifying
@@ -24,4 +23,8 @@ public interface CartImple extends JpaRepository<CartInformation, Long> {
 
 	@Query(value = "select * from cartinfo where cart_id=:id ", nativeQuery = true)
 	CartInformation findCartbyId(long id);
+	
+	@Query(value = "select * from cartinfo where cart_id=:id and book_id = :bookId ", nativeQuery = true)
+	CartInformation cartbyId(long id, long bookId);
+	
 }

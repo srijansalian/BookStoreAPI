@@ -36,8 +36,6 @@ public class BookInformation {
 
 	private String authorName;
 	
-	@ManyToOne( targetEntity = CartInformation.class)
-	private CartInformation cartId;
 	
 	private String bookDetails;
 	
@@ -45,12 +43,12 @@ public class BookInformation {
 	
 	private String image;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
-
-			@JoinColumn(name = "userId") })
-	@JsonBackReference
-	private List<CartInformation> list;
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "CartInformation", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
+//
+//			@JoinColumn(name = "userId") })
+//	@JsonBackReference
+//	private List<CartInformation> list;
 
 	public long getBookId() {
 		return bookId;
@@ -114,22 +112,6 @@ public class BookInformation {
 
 	public void setImage(String image) {
 		this.image = image;
-	}
-
-	public List<CartInformation> getList() {
-		return list;
-	}
-
-	public void setList(List<CartInformation> list) {
-		this.list = list;
-	}
-
-	public CartInformation getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(CartInformation cartId) {
-		this.cartId = cartId;
 	}
 
 	

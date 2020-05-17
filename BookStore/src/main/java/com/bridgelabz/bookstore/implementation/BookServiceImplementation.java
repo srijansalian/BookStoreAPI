@@ -64,11 +64,11 @@ public class BookServiceImplementation implements IBookService {
 	@Override
 	public boolean addandupdatecart(Long userId, int quantity, Long bookId) {
 		BookInformation book = repository.fetchbyId(bookId);
-		List<BookInformation> books = repository.fetchbyIdList(bookId);
+//		List<BookInformation> books = repository.fetchbyIdList(bookId);
 		CartInformation cart = cartrepository.fetchbyId(bookId);
 		if (cart != null) {
 
-			int updatedquantity = cart.getQuantity() + quantity;
+			int updatedquantity =  quantity;
 			System.out.println(updatedquantity);
 			if (book.getQuantity() >= updatedquantity) {
 
@@ -78,8 +78,8 @@ public class BookServiceImplementation implements IBookService {
 				return false;
 		} else if (book.getQuantity() >= quantity) {
 			cartinformation.setUserId(userId);
-			cartinformation.setQuantity(quantity);
-			cartinformation.setBook(books);
+//			cartinformation.setQuantity(quantity);
+//			cartinformation.setBook(books);
 			cartrepository.save(cartinformation);
 			return true;
 		}
@@ -99,6 +99,7 @@ public class BookServiceImplementation implements IBookService {
 	@Override
 	public List<BookInformation> sortGetAllBooks() {
 		List<BookInformation> list = repository.findAll();
+		System.out.println("list"+list);
 		list.sort((BookInformation book1, BookInformation book2) -> book1.getCreatedDateAndTime().compareTo(book2.getCreatedDateAndTime()));
 		return list;
 	}
@@ -145,7 +146,7 @@ public class BookServiceImplementation implements IBookService {
 //}
 	
 	@Override
-	public List<BookInformation> sorting(boolean value){
+	public List<BookInformation> sorting(Boolean value){
 		List<BookInformation> list = repository.findAll();
 		if(value==true) {
 		list.sort((BookInformation book1, BookInformation book2) -> book1.getPrice().compareTo(book2.getPrice()));
@@ -162,7 +163,7 @@ public class BookServiceImplementation implements IBookService {
 	public List<BookInformation> findAllPageBySize(int pagenumber) {
 		long count = repository.count();
 		System.out.println("count ::" + count);
-		int pageSize = 3;
+		int pageSize = 8;
 		int pages = (int) ((count / pageSize));
 		int i = pagenumber; // i should start with zero or 0...
 		while (i <= pages) {

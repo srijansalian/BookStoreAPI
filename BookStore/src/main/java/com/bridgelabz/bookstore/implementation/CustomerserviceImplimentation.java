@@ -1,6 +1,6 @@
 package com.bridgelabz.bookstore.implementation;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +31,7 @@ public class CustomerserviceImplimentation implements Customerservice {
 	@Override
 	public BookInformation getBookfromCart(long bookId, long userId) {
 		CartInformation cartinfo = new CartInformation();
-		List<BookInformation> book = repository.fetchbyIdList(bookId);
-		cartinfo.setBook(book);
+//		BookInformation books = repository.fetchbyId(bookId);
 		cartinfo.setBookId(bookId);
 		cartinfo.setUserId(userId); 
 		cartrepository.save(cartinfo);
@@ -48,8 +47,8 @@ public class CustomerserviceImplimentation implements Customerservice {
 	}
 
 	@Override
-	public boolean deletefromCart(long bookId) {
-		CartInformation cartinfo = cartrepository.findCartbyId(bookId);
+	public boolean deletefromCart(long bookId, long cartId) {
+		CartInformation cartinfo = cartrepository.cartbyId(cartId, bookId);
 		if (cartinfo != null) {
 			cartrepository.delete(cartinfo);
 			return true;
@@ -88,51 +87,61 @@ public class CustomerserviceImplimentation implements Customerservice {
 	}
 
 	@Override
-	public boolean addCustomerDetails(CustomerDto dto, String variable) {
-		
-		if( dto.getPincode() != 0 && dto.getLocality() != null && dto.getAddress() != null &&
-			dto.getCity() != null && dto.getLandmark() != null && dto.getName() != null && dto.getPhonenumber() != 0) {
-			CustomerInformation infer = customerrep.getCustomerInfo(dto.getName(), dto.getPhonenumber());
-			if( infer != null) {
-				return false;
-			}
-			if( infer == null) {
-		Address addinfo = new Address();
+	public CustomerInformation addCustomerDetails(CustomerDto dto) {
+System.out.println("dto====="+dto);
+System.out.println("______dto home"+dto.getHome());
+System.out.println("______dto work"+dto.getWork());
+System.out.println("______dto other"+dto.getOther());
+CustomerInformation customer = customerrep.getCustomerbyDetails(dto.getName(), dto.getPhonenumber());
+    
 		CustomerInformation info = new CustomerInformation();
-		addinfo.setPincode(dto.getPincode());
-		addinfo.setLocality(dto.getLocality());
-		addinfo.setAddress(dto.getAddress());
-		addinfo.setCity(dto.getCity());
-		addinfo.setLandmark(dto.getLandmark());
-		addrepository.save(addinfo);
+		Address address = new Address();
+		Address home = dto.getHome();
+		Address work = dto.getWork();
+		Address Other = dto.getOther();
+		if(home != null && home.getPincode() != 0 && customer == null) {
+			System.out.println("______home");
+			address.setAddress(home.getAddress());
+			address.setCity(home.getCity());
+			address.setLandmark(home.getLandmark());
+			address.setLocality(home.getLocality());
+			address.setPincode(home.getPincode());
+			addrepository.save(address);
+			info.setName(dto.getName());
+			info.setPhonenumber(dto.getPhonenumber());
+			info.setHome(address); 
+		customerrep.save(info); 
+		}
+		if(work != null && work.getPincode() != 0 && customer == null) {
+			System.out.println("+++++++work");
+			address.setAddress(work.getAddress());
+			address.setCity(work.getCity());
+			address.setLandmark(work.getLandmark());
+			address.setLocality(work.getLocality());
+			address.setPincode(work.getPincode());
+			addrepository.save(address);
+			info.setName(dto.getName());
+			info.setPhonenumber(dto.getPhonenumber());
+			info.setWork(address); 
+		customerrep.save(info); 
+		}
+		if(Other != null && Other.getPincode() != 0 && customer == null) {
+			System.out.println("______other");
+			address.setAddress(Other.getAddress());
+			address.setCity(Other.getCity());
+			address.setLandmark(Other.getLandmark());
+			address.setLocality(Other.getLocality());
+			address.setPincode(Other.getPincode());
+			addrepository.save(address);
+			info.setName(dto.getName());
+			info.setPhonenumber(dto.getPhonenumber());
+			info.setOthers(address); 
+		customerrep.save(info); 
+		}
+    
+		return info;
 		
-		info.setName(dto.getName());
-		info.setPhonenumber(dto.getPhonenumber());
-		customerrep.save(info);
-		
-//		addinfo.setUserId(info.getUserId());
-		addrepository.save(addinfo);
-		
-		customerrep.save(info);
-		 
-		if(variable.equals("Home")) {
-		    info.setHome(addinfo); 
-		    customerrep.save(info);
-		}
-		if( variable.equals("Work")) {
-			info.setWork(addinfo);
-			customerrep.save(info);
-		}
-		if( variable.equals("Other")) {
-			info.setOthers(addinfo); 
-			customerrep.save(info);
-		}
-		addinfo.setCustomerinfo(info);
-		addrepository.save(addinfo);
-		}
-		}
-		
-		return true;
+
 	}
 
 }

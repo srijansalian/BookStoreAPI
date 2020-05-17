@@ -16,7 +16,7 @@ public interface IBookService {
 	
 	boolean addandupdatecart(Long userId, int quantity, Long bookId);
 
-	List<BookInformation> sorting(boolean value);
+	List<BookInformation> sorting(Boolean value);
 
     List<BookInformation> findAllPageBySize( int pagenumber);
 	

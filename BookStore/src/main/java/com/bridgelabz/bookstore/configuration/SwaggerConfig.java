@@ -2,6 +2,8 @@ package com.bridgelabz.bookstore.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -19,5 +21,13 @@ public class SwaggerConfig {
 				.apis(RequestHandlerSelectors.basePackage("com.bridgelabz.bookstore.controller"))
 				.paths(PathSelectors.any()).build();
 	}
-
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurer() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000");
+//			}
+//		};
+//	}
+//}
 }
